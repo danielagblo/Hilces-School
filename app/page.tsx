@@ -290,15 +290,32 @@ export default function Home() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 relative z-10">
-          <div className="text-center mb-32">
-            <motion.h3 
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="text-5xl md:text-7xl font-heading font-black text-primary tracking-tight"
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-10 mb-20 lg:mb-24">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="max-w-2xl"
             >
-              Why Choose <span className="text-gold">Hilces?</span>
-            </motion.h3>
-            <div className="w-20 h-1 bg-gold mx-auto mt-6 rounded-full opacity-50"></div>
+              <span className="text-[10px] font-black tracking-[0.4em] text-primary/30 uppercase mb-4 block">Unrivaled Excellence</span>
+              <h3 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-primary leading-[1.1] tracking-tight">
+                Why Choose <br/>
+                <span className="text-gold italic font-black">Hilces International?</span>
+              </h3>
+              <div className="w-20 h-1 bg-gold mt-6 rounded-full shadow-[0_0_15px_rgba(249,196,35,0.4)]"></div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="max-w-md lg:pb-2"
+            >
+              <p className="text-slate-500 text-lg font-medium leading-relaxed">
+                Nurturing young geniuses through a hybrid of global standards and local values, in a serene environment designed for holistic growth and leadership.
+              </p>
+            </motion.div>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-8">
@@ -334,74 +351,85 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-32 bg-slate-50 relative overflow-hidden">
-        <div className="absolute top-0 right-0 p-32 opacity-5 text-primary pointer-events-none">
-          <Star size={300} />
+      {/* Ultra-Compact Testimonials Section */}
+      <section className="py-12 bg-slate-50 relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-8 opacity-5 text-primary pointer-events-none">
+          <Star size={100} />
         </div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
-            <div className="max-w-2xl">
-              <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Voice of Parents</h2>
-              <h3 className="text-4xl md:text-5xl font-heading font-bold text-primary tracking-tight">What Our Family <br/>Has to Say</h3>
-            </div>
-            <div className="flex gap-4">
-               <div className="w-16 h-1 bg-gold rounded-full mb-2"></div>
-            </div>
-          </div>
+        <div className="max-w-5xl mx-auto px-4 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
+            {/* Left Column: Header + Bubble */}
+            <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
+              <div className="mb-6 text-center lg:text-left">
+                <h2 className="text-[10px] font-bold tracking-[0.3em] text-red-600 uppercase mb-1">Testimonials</h2>
+                <h3 className="text-3xl md:text-4xl font-heading font-bold text-primary tracking-tight">Parents Reviews</h3>
+              </div>
 
-          <div className="grid md:grid-cols-3 gap-10">
-            {[
-              {
-                name: "Mrs. Ama Boateng",
-                role: "Parent",
-                content: "Hilces has transformed my child's confidence. The hybrid curriculum is truly world-class, and I've seen remarkable improvement in her critical thinking skills."
-              },
-              {
-                name: "Mr. Kwabena Mensah",
-                role: "Parent",
-                content: "The best decision we made for our son. The teachers are dedicated and the environment is serene. He's always excited to share what he learned in the lab!"
-              },
-              {
-                name: "Dr. Sarah Appiah",
-                role: "Parent",
-                content: "I love the focus on practical learning. My daughter is always excited about her science experiments! The activity-based model really works."
-              }
-            ].map((t, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-white p-12 rounded-[3.5rem] shadow-xl shadow-primary/5 relative group hover:bg-primary transition-all duration-500 overflow-hidden"
-              >
-                {/* Large Background Quote Icon */}
-                <div className="absolute top-0 right-0 p-8 text-primary/5 group-hover:text-white/10 transition-colors pointer-events-none">
-                  <Star size={120} className="fill-current" />
-                </div>
+              <div className="relative">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentSlide % 3}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="bg-primary p-10 md:p-14 text-white relative shadow-[0_40px_100px_-15px_rgba(10,77,162,0.4)] border border-white/10 max-w-[420px] group isolate"
+                    style={{ 
+                      borderRadius: "60% 40% 70% 30% / 40% 50% 60% 50%",
+                      transform: "translateZ(0)"
+                    }}
+                  >
+                    {/* The Red Quote Circle from Reference */}
+                    <div className="absolute top-10 -right-4 md:-right-8">
+                      <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-xl text-white transform hover:scale-110 transition-transform">
+                        <span className="text-3xl font-serif leading-none mt-2">“</span>
+                      </div>
+                    </div>
 
-                <div className="relative z-10">
-                  <div className="flex gap-1 mb-8">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={16} className="fill-gold text-gold" />
-                    ))}
-                  </div>
-                  
-                  <div className="text-4xl font-serif text-gold/30 mb-4 leading-none">“</div>
-                  
-                  <p className="text-slate-600 text-xl leading-relaxed mb-10 font-medium group-hover:text-white/90 transition-colors">
-                    {t.content}
-                  </p>
-                  
-                  <div className="border-t border-slate-100 pt-8 group-hover:border-white/20 transition-colors">
-                    <h4 className="text-2xl font-heading font-bold text-primary group-hover:text-white transition-colors">{t.name}</h4>
-                    <span className="text-gold text-sm font-bold uppercase tracking-[0.3em]">{t.role}</span>
-                  </div>
+                    <div className="relative z-10">
+                      <h4 className="text-2xl md:text-3xl font-heading font-bold text-white mb-2">
+                        {["Mrs. Ama Boateng", "Mr. Kwabena Mensah", "Dr. Sarah Appiah"][currentSlide % 3]}
+                      </h4>
+                      
+                      <div className="flex gap-1 mb-6 text-gold">
+                        {[...Array(5)].map((_, i) => <Star key={i} size={16} className="fill-current" />)}
+                      </div>
+
+                      <p className="text-white/90 text-lg leading-relaxed mb-4 font-medium">
+                        {[
+                          "Hilces has transformed my child's confidence. The hybrid curriculum is truly world-class, and we love it!",
+                          "The best decision for our son. The teachers are dedicated and the environment is so serene.",
+                          "I love the practical learning. My daughter is always excited about her science experiments!"
+                        ][currentSlide % 3]}
+                      </p>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+                
+                <div className="flex gap-2.5 mt-8 justify-center lg:justify-start lg:ml-10">
+                  {[0, 1, 2].map((i) => (
+                    <button 
+                      key={i} 
+                      onClick={() => setCurrentSlide(i)} 
+                      className={`h-3 rounded-full transition-all duration-300 ${ (currentSlide % 3) === i ? 'w-10 bg-red-600' : 'w-3 bg-slate-300' }`} 
+                    />
+                  ))}
                 </div>
+              </div>
+            </div>
+
+            {/* Right Column: Ultra-Compact Collage */}
+            <div className="relative w-full lg:w-1/2 h-[320px] hidden lg:block">
+              <motion.div animate={{ y: [0, -5, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute top-0 right-10 w-48 h-48 rounded-full border-[4px] border-white overflow-hidden shadow-lg z-20">
+                <Image src="/images/activity_feature.png" alt="S1" fill className="object-cover" sizes="192px" />
               </motion.div>
-            ))}
+              <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 5, repeat: Infinity }} className="absolute top-20 right-40 w-44 h-44 rounded-full border-[4px] border-white overflow-hidden shadow-lg z-10">
+                <Image src="/images/lab_feature.png" alt="S2" fill className="object-cover" sizes="176px" />
+              </motion.div>
+              <motion.div animate={{ x: [0, 5, 0] }} transition={{ duration: 6, repeat: Infinity }} className="absolute bottom-5 right-5 w-40 h-40 rounded-full border-[4px] border-white overflow-hidden shadow-lg z-30">
+                <Image src="/images/curriculum_feature.png" alt="S3" fill className="object-cover" sizes="160px" />
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
