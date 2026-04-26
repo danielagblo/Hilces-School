@@ -36,8 +36,17 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes slowZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.15); }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slow-zoom {
+  animation: slowZoom 8s ease-out forwards;
 }
 
 /* IMAGE SHINE EFFECT */

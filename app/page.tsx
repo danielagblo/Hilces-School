@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  BookOpen, 
-  Microscope, 
-  Users, 
+import {
+  BookOpen,
+  Microscope,
+  Users,
   Activity,
   ChevronRight,
   ChevronLeft,
@@ -30,7 +30,7 @@ const slides = [
     badge: "Hybrid Curriculum"
   },
   {
-    image: "/slideshow/649254884_122205798806323889_7129877090498415075_n.jpg",
+    image: "/slideshow/650919053_122205798848323889_6911637195678904279_n.jpg",
     title: "Activity-Based Learning",
     subtitle: "Engaging students through practical, hands-on experiences and modern technology.",
     badge: "Practical Focus"
@@ -68,28 +68,31 @@ export default function Home() {
   return (
     <div>
       {/* Hero Slideshow Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-primary">
-        <AnimatePresence mode="wait">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[#03152d]">
+        <AnimatePresence>
           <motion.div
             key={currentSlide}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, scale: 1 }}
+            animate={{ opacity: 1, scale: 1.1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.5 }}
+            transition={{
+              opacity: { duration: 1.5 },
+              scale: { duration: 8, ease: "linear" }
+            }}
             className="absolute inset-0"
           >
-            <Image 
-              src={slides[currentSlide].image} 
-              alt={slides[currentSlide].title} 
-              fill 
-              className="object-cover opacity-40 scale-105 animate-slow-zoom"
+            <Image
+              src={slides[currentSlide].image}
+              alt={slides[currentSlide].title}
+              fill
+              className="object-cover opacity-60"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#03152d] via-transparent to-transparent"></div>
           </motion.div>
         </AnimatePresence>
-        
-        <div className="relative z-10 max-w-5xl mx-auto px-4 text-center">
+
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
@@ -97,22 +100,23 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
+              className="bg-black/20 backdrop-blur-md p-10 md:p-14 rounded-[3rem] border border-white/10 shadow-2xl"
             >
-              <span className="inline-block py-2 px-5 rounded-full bg-gold/20 border border-gold/30 text-gold font-bold text-xs uppercase tracking-widest mb-8 backdrop-blur-md">
+              <span className="inline-block py-1.5 px-4 rounded-full bg-gold/20 border border-gold/30 text-gold font-bold text-[10px] uppercase tracking-widest mb-6 backdrop-blur-md">
                 {slides[currentSlide].badge}
               </span>
-              <h1 className="text-5xl md:text-8xl font-heading font-bold text-white mb-8 leading-[1.1] tracking-tight">
-                {slides[currentSlide].title.split(" ").slice(0, -2).join(" ")} <br/>
+              <h1 className="text-4xl md:text-7xl font-heading font-bold text-white mb-6 leading-[1.1] tracking-tight">
+                {slides[currentSlide].title.split(" ").slice(0, -2).join(" ")} <br />
                 <span className="text-gold">{slides[currentSlide].title.split(" ").slice(-2).join(" ")}</span>
               </h1>
-              <p className="text-lg md:text-xl text-white/80 mb-12 max-w-2xl mx-auto font-medium leading-relaxed">
+              <p className="text-base md:text-lg text-white/90 mb-10 max-w-xl mx-auto font-medium leading-relaxed">
                 {slides[currentSlide].subtitle}
               </p>
-              <div className="flex flex-col sm:flex-row gap-5 justify-center">
-                <Link href="/admissions" className="bg-gold hover:bg-gold/90 text-primary px-10 py-4 rounded-full font-bold transition-all transform hover:scale-105 flex items-center justify-center gap-2 shadow-2xl shadow-gold/20">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href="/admissions" className="bg-gold hover:bg-gold/90 text-primary px-8 py-3.5 rounded-full font-bold transition-all transform hover:scale-105 flex items-center justify-center gap-2 shadow-2xl shadow-gold/20">
                   Apply Today <ChevronRight size={20} />
                 </Link>
-                <Link href="/about" className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 px-10 py-4 rounded-full font-bold transition-all flex items-center justify-center">
+                <Link href="/about" className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 px-8 py-3.5 rounded-full font-bold transition-all flex items-center justify-center">
                   Our Story
                 </Link>
               </div>
@@ -121,13 +125,13 @@ export default function Home() {
         </div>
 
         {/* Navigation Arrows */}
-        <button 
+        <button
           onClick={prevSlide}
           className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-primary transition-all backdrop-blur-md"
         >
           <ChevronLeft size={24} />
         </button>
-        <button 
+        <button
           onClick={nextSlide}
           className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-primary transition-all backdrop-blur-md"
         >
@@ -144,9 +148,9 @@ export default function Home() {
             />
           ))}
         </div>
-        
+
         {/* Scroll Indicator */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
@@ -174,7 +178,7 @@ export default function Home() {
               { icon: Users, title: "Expert Teachers", desc: "Dedicated and highly experienced educators." },
               { icon: Microscope, title: "Equipped Labs", desc: "State-of-the-art science laboratories." }
             ].map((feature, idx) => (
-              <motion.div 
+              <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -220,18 +224,18 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid md:grid-cols-3 gap-10">
             {[
-              { 
-                title: "Academics", 
+              {
+                title: "Academics",
                 desc: "Explore our hybrid curriculum that blends the best of GES and British educational systems.",
                 link: "/academics"
               },
-              { 
-                title: "Co-Curricular", 
+              {
+                title: "Co-Curricular",
                 desc: "From Coding and Robotics to Ballet and Taekwondo, see how we nurture well-rounded leaders.",
                 link: "/activities"
               },
-              { 
-                title: "Admissions", 
+              {
+                title: "Admissions",
                 desc: "Ready to join the Hilces family? We admit students from 6 months old through to JHS 3.",
                 link: "/admissions"
               }
