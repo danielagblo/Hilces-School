@@ -1,20 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  BookOpen,
-  Microscope,
-  Users,
+import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
+import { 
+  BookOpen, 
+  Microscope, 
+  Users, 
   Activity,
   ChevronRight,
   ChevronLeft,
   Award,
   Globe,
-  Star
+  Star,
+  Music,
+  PenTool,
+  Zap
 } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef, useMemo } from "react";
 
 const slides = [
   {
@@ -49,8 +52,101 @@ const slides = [
   }
 ];
 
+function WhimsicalBubble({ feature, idx }: { feature: any, idx: number }) {
+  const isEven = idx % 2 === 0;
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ 
+        type: "spring", 
+        stiffness: 200, 
+        damping: 20, 
+        delay: idx * 0.05 
+      }}
+      className={`relative flex flex-col items-center group ${isEven ? 'md:translate-y-16' : ''}`}
+    >
+      {/* Bobbing Wrapper */}
+      <motion.div
+        animate={{
+          y: [0, -10, 0],
+        }}
+        transition={{
+          duration: 3 + idx,
+          repeat: Infinity,
+          ease: "easeInOut"
+        }}
+        className="relative z-10"
+      >
+        {/* The Hover Bubble - Snappy Transition */}
+        <motion.div
+          whileHover={{ 
+            scale: 1.05,
+            transition: { duration: 0.15, ease: [0.23, 1, 0.32, 1] } 
+          }}
+          className="relative w-64 h-64 md:w-80 md:h-80 rounded-[3.5rem] overflow-hidden shadow-[0_15px_40px_rgba(10,77,162,0.12)] border-[3px] border-white group-hover:border-gold transition-colors duration-150 isolate bg-slate-900"
+          style={{ transform: "translate3d(0,0,0)", backfaceVisibility: "hidden" }}
+        >
+          <Image 
+            src={feature.image} 
+            alt={feature.title} 
+            fill 
+            sizes="(max-width: 768px) 256px, 320px"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/60 opacity-60"></div>
+          
+          {/* Floating Icon inside bubble */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 text-white shadow-2xl transition-transform duration-300 group-hover:scale-110">
+              <feature.icon size={48} />
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+
+      {/* Whimsical Text Label */}
+      <div className="mt-8 text-center max-w-[280px]">
+        <h4 className="text-xl md:text-2xl font-heading font-bold text-primary mb-3 group-hover:text-gold transition-colors duration-150">
+          {feature.title}
+        </h4>
+        <div className="overflow-hidden max-h-0 group-hover:max-h-32 transition-all duration-300 ease-out">
+          <p className="text-slate-500 text-sm font-medium leading-relaxed pb-4 px-2">
+            {feature.desc}
+          </p>
+        </div>
+      </div>
+
+      {/* Decorative Sparkle */}
+      <motion.div
+        animate={{ 
+          scale: [1, 1.2, 1],
+          opacity: [0.4, 0.8, 0.4],
+          rotate: [0, 180, 360]
+        }}
+        transition={{ duration: 4, repeat: Infinity }}
+        className="absolute -top-2 -right-2 text-gold z-20 pointer-events-none"
+      >
+        <Star size={24} className="fill-gold" />
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  // Pre-calculated random values to avoid hydration mismatch
+  const iconPositions = useMemo(() => {
+    return [...Array(12)].map((_, i) => ({
+      left: `${(i * 15 + 7) % 100}%`,
+      top: `${(i * 23 + 12) % 100}%`,
+      type: i % 4
+    }));
+  }, []);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -61,12 +157,13 @@ export default function Home() {
   };
 
   useEffect(() => {
+    setMounted(true);
     const timer = setInterval(nextSlide, 6000);
     return () => clearInterval(timer);
   }, [nextSlide]);
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
       {/* Hero Slideshow Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[#03152d]">
         <AnimatePresence>
@@ -75,23 +172,24 @@ export default function Home() {
             initial={{ opacity: 0, scale: 1 }}
             animate={{ opacity: 1, scale: 1.1 }}
             exit={{ opacity: 0 }}
-            transition={{
+            transition={{ 
               opacity: { duration: 1.5 },
               scale: { duration: 8, ease: "linear" }
             }}
             className="absolute inset-0"
           >
-            <Image
-              src={slides[currentSlide].image}
-              alt={slides[currentSlide].title}
-              fill
+            <Image 
+              src={slides[currentSlide].image} 
+              alt={slides[currentSlide].title} 
+              fill 
+              sizes="100vw"
               className="object-cover opacity-60"
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#03152d] via-transparent to-transparent"></div>
           </motion.div>
         </AnimatePresence>
-
+        
         <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
           <AnimatePresence mode="wait">
             <motion.div
@@ -125,13 +223,13 @@ export default function Home() {
         </div>
 
         {/* Navigation Arrows */}
-        <button
+        <button 
           onClick={prevSlide}
           className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-primary transition-all backdrop-blur-md"
         >
           <ChevronLeft size={24} />
         </button>
-        <button
+        <button 
           onClick={nextSlide}
           className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-primary transition-all backdrop-blur-md"
         >
@@ -148,49 +246,160 @@ export default function Home() {
             />
           ))}
         </div>
-
-        {/* Scroll Indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-10 left-10 flex flex-col items-center gap-2"
-        >
-          <span className="text-white/30 text-[10px] uppercase tracking-[0.3em] font-bold rotate-90 origin-left mb-8">Scroll</span>
-          <div className="w-px h-12 bg-gradient-to-b from-gold to-transparent"></div>
-        </motion.div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="py-32 bg-white text-slate-900 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-24">
-            <h2 className="text-xs font-bold tracking-[0.3em] text-primary uppercase mb-4">The Hilces Advantage</h2>
-            <h3 className="text-4xl md:text-5xl font-heading font-bold mb-6 text-primary">Why Choose Us?</h3>
-            <div className="w-24 h-1 bg-gold mx-auto rounded-full mb-8"></div>
-            <p className="text-slate-500 max-w-2xl mx-auto text-lg leading-relaxed">We provide an all-encompassing environment tailored for academic excellence and personal growth.</p>
+      {/* WHY CHOOSE US - STABILIZED WHIMSICAL EDITION */}
+      <section className="py-48 bg-white relative overflow-hidden">
+        {/* Animated Background Doodles - Fixed Hydration */}
+        <div className="absolute inset-0 pointer-events-none">
+          {mounted && iconPositions.map((pos, i) => (
+            <motion.div
+              key={i}
+              animate={{
+                x: [0, 20, -20, 0],
+                y: [0, -20, 20, 0],
+                rotate: [0, 360],
+              }}
+              transition={{
+                duration: 15 + i,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              style={{
+                left: pos.left,
+                top: pos.top,
+              }}
+              className="absolute opacity-5 text-primary"
+            >
+              {pos.type === 0 ? <Music size={48} /> : pos.type === 1 ? <PenTool size={32} /> : pos.type === 2 ? <Globe size={40} /> : <Zap size={24} />}
+            </motion.div>
+          ))}
+          
+          {/* Animated Connective Path */}
+          <svg className="absolute inset-0 w-full h-full opacity-5">
+            <motion.path
+              d="M 100,300 Q 400,100 700,300 T 1300,300"
+              fill="transparent"
+              stroke="#0a4da2"
+              strokeWidth="2"
+              strokeDasharray="10 10"
+              animate={{ strokeDashoffset: [-100, 0] }}
+              transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            />
+          </svg>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
+          <div className="text-center mb-32">
+            <motion.h3 
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="text-5xl md:text-7xl font-heading font-black text-primary tracking-tight"
+            >
+              Why Choose <span className="text-gold">Hilces?</span>
+            </motion.h3>
+            <div className="w-20 h-1 bg-gold mx-auto mt-6 rounded-full opacity-50"></div>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-8">
             {[
-              { icon: BookOpen, title: "Hybrid Curriculum", desc: "Perfect blend of GES and British Curriculum." },
-              { icon: Activity, title: "Activity-Based", desc: "Interactive, hands-on learning experiences." },
-              { icon: Users, title: "Expert Teachers", desc: "Dedicated and highly experienced educators." },
-              { icon: Microscope, title: "Equipped Labs", desc: "State-of-the-art science laboratories." }
+              { 
+                icon: BookOpen, 
+                title: "Hybrid Curriculum", 
+                desc: "A blend of British standards and GES local values for global success.",
+                image: "/images/curriculum_feature.png"
+              },
+              { 
+                icon: Activity, 
+                title: "Activity Learning", 
+                desc: "Hands-on projects that make complex concepts fun and memorable.",
+                image: "/images/activity_feature.png"
+              },
+              { 
+                icon: Users, 
+                title: "Expert Mentors", 
+                desc: "Dedicated teachers who nurture every child's individual genius.",
+                image: "/images/teacher_feature.png"
+              },
+              { 
+                icon: Microscope, 
+                title: "Modern Labs", 
+                desc: "Equipped Hubs for science, tech, and practical exploration.",
+                image: "/images/lab_feature.png"
+              }
             ].map((feature, idx) => (
+              <WhimsicalBubble key={idx} feature={feature} idx={idx} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-32 bg-slate-50 relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-32 opacity-5 text-primary pointer-events-none">
+          <Star size={300} />
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+            <div className="max-w-2xl">
+              <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Voice of Parents</h2>
+              <h3 className="text-4xl md:text-5xl font-heading font-bold text-primary tracking-tight">What Our Family <br/>Has to Say</h3>
+            </div>
+            <div className="flex gap-4">
+               <div className="w-16 h-1 bg-gold rounded-full mb-2"></div>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-10">
+            {[
+              {
+                name: "Mrs. Ama Boateng",
+                role: "Parent",
+                content: "Hilces has transformed my child's confidence. The hybrid curriculum is truly world-class, and I've seen remarkable improvement in her critical thinking skills."
+              },
+              {
+                name: "Mr. Kwabena Mensah",
+                role: "Parent",
+                content: "The best decision we made for our son. The teachers are dedicated and the environment is serene. He's always excited to share what he learned in the lab!"
+              },
+              {
+                name: "Dr. Sarah Appiah",
+                role: "Parent",
+                content: "I love the focus on practical learning. My daughter is always excited about her science experiments! The activity-based model really works."
+              }
+            ].map((t, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-slate-50 border border-slate-100 p-10 rounded-[2.5rem] hover:shadow-2xl hover:shadow-primary/5 transition-all hover:-translate-y-2 group"
+                className="bg-white p-12 rounded-[3.5rem] shadow-xl shadow-primary/5 relative group hover:bg-primary transition-all duration-500 overflow-hidden"
               >
-                <div className="w-16 h-16 bg-primary/5 rounded-2xl flex items-center justify-center mb-8 group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                  <feature.icon className="text-primary group-hover:text-white transition-colors" size={32} />
+                {/* Large Background Quote Icon */}
+                <div className="absolute top-0 right-0 p-8 text-primary/5 group-hover:text-white/10 transition-colors pointer-events-none">
+                  <Star size={120} className="fill-current" />
                 </div>
-                <h4 className="text-2xl font-heading font-bold mb-4 text-primary">{feature.title}</h4>
-                <p className="text-slate-500 text-sm leading-relaxed font-medium">{feature.desc}</p>
+
+                <div className="relative z-10">
+                  <div className="flex gap-1 mb-8">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} size={16} className="fill-gold text-gold" />
+                    ))}
+                  </div>
+                  
+                  <div className="text-4xl font-serif text-gold/30 mb-4 leading-none">“</div>
+                  
+                  <p className="text-slate-600 text-xl leading-relaxed mb-10 font-medium group-hover:text-white/90 transition-colors">
+                    {t.content}
+                  </p>
+                  
+                  <div className="border-t border-slate-100 pt-8 group-hover:border-white/20 transition-colors">
+                    <h4 className="text-2xl font-heading font-bold text-primary group-hover:text-white transition-colors">{t.name}</h4>
+                    <span className="text-gold text-sm font-bold uppercase tracking-[0.3em]">{t.role}</span>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -198,7 +407,7 @@ export default function Home() {
       </section>
 
       {/* Featured Quote */}
-      <section className="py-24 bg-primary text-white overflow-hidden relative">
+      <section className="py-32 bg-primary text-white overflow-hidden relative">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           <motion.div
@@ -206,14 +415,14 @@ export default function Home() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
           >
-            <div className="text-6xl text-gold/20 font-serif mb-4 leading-none">“</div>
-            <p className="text-2xl md:text-3xl font-heading font-medium italic mb-8 leading-relaxed">
+            <div className="text-7xl text-gold/20 font-serif mb-6 leading-none">“</div>
+            <p className="text-3xl md:text-4xl font-heading font-medium italic mb-10 leading-relaxed">
               Our mission is to provide an enabling and thriving environment, and to produce well-mannered and responsible future leaders.
             </p>
-            <div className="flex items-center justify-center gap-4">
-              <div className="w-12 h-1 bg-gold rounded-full"></div>
-              <span className="uppercase tracking-[0.4em] text-xs font-bold text-gold">Our Mission</span>
-              <div className="w-12 h-1 bg-gold rounded-full"></div>
+            <div className="flex items-center justify-center gap-6">
+              <div className="w-16 h-1 bg-gold rounded-full"></div>
+              <span className="uppercase tracking-[0.5em] text-xs font-bold text-gold">Our Mission</span>
+              <div className="w-16 h-1 bg-gold rounded-full"></div>
             </div>
           </motion.div>
         </div>
