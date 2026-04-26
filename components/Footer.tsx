@@ -68,7 +68,7 @@ export default function Footer() {
           </div>
           
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-widest font-bold text-white/40">
-            <p>&copy; {new Date().getFullYear()} Hilces International School. Powered by Bricsky.</p>
+            <p>&copy; {new Date().getFullYear()} Hilces International School. Designed by <a href="https://skytechghana.com/" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">SkyTech Ghana</a>.</p>
             <div className="flex gap-8">
               <span>Privacy Policy</span>
               <span>Terms of Service</span>
