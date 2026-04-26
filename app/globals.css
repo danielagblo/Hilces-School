@@ -1,18 +1,48 @@
 @import "tailwindcss";
 
+/* 
+   BRAND COLORS FOR HILCES INTERNATIONAL SCHOOL
+   Primary Blue: #0a4da2
+   Primary Gold: #f9c423
+   Primary Red: #d71921
+*/
+
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
+  --primary: #0a4da2;
+  --gold: #f9c423;
+  --red: #d71921;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+@theme {
+  --color-primary: #0a4da2;
+  --color-gold: #f9c423;
+  --color-red: #d71921;
+  --color-brand-blue: #0a4da2;
+  --color-brand-gold: #f9c423;
+  
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-outfit);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: #ffffff;
+  color: #0f172a;
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Explicit Utility Classes */
+.bg-primary { background-color: #0a4da2 !important; }
+.text-primary { color: #0a4da2 !important; }
+.bg-gold { background-color: #f9c423 !important; }
+.text-gold { color: #f9c423 !important; }
+.border-gold { border-color: #f9c423 !important; }
+
+/* Animation Keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
 }
