@@ -40,7 +40,7 @@ const activities = [
 
 export default function Activities() {
   return (
-    <div className="pt-24 pb-16">
+    <div className="pb-16">
       {/* Header */}
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-full opacity-5">

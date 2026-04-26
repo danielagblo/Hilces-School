@@ -6,7 +6,7 @@ import { Target, Compass, Award, Globe } from "lucide-react";
 
 export default function About() {
   return (
-    <div className="pt-24 pb-16">
+    <div className="pb-16">
       {/* Header */}
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">

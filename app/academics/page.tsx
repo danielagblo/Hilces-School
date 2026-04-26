@@ -6,7 +6,7 @@ import { BookOpen, Microscope, Globe, LayoutList, CheckCircle2 } from "lucide-re
 
 export default function Academics() {
   return (
-    <div className="pt-24 pb-16">
+    <div className="pb-16">
       {/* Header */}
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>

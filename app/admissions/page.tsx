@@ -6,7 +6,7 @@ import { Calendar, CheckCircle2, Home, MessageCircle, Phone, ArrowRight, ShieldC
 
 export default function Admissions() {
   return (
-    <div className="pt-24 pb-16">
+    <div className="pb-16">
       {/* Header */}
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
         <div className="absolute top-0 right-0 w-full h-full opacity-10">
