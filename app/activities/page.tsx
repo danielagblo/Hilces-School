@@ -78,7 +78,7 @@ export default function Activities() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative h-[600px] rounded-[3rem] overflow-hidden shadow-2xl group"
+              className="relative h-[600px] rounded-[3rem] overflow-hidden shadow-2xl group image-shine"
             >
               <Image 
                 src="/images/robotics_class.png" 

@@ -1,12 +1,5 @@
 @import "tailwindcss";
 
-/* 
-   BRAND COLORS FOR HILCES INTERNATIONAL SCHOOL
-   Primary Blue: #0a4da2
-   Primary Gold: #f9c423
-   Primary Red: #d71921
-*/
-
 :root {
   --primary: #0a4da2;
   --gold: #f9c423;
@@ -45,4 +38,41 @@ body {
 
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* IMAGE SHINE EFFECT */
+.image-shine {
+  position: relative;
+  overflow: hidden;
+  display: block;
+}
+
+.image-shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  transition: 0.7s;
+  z-index: 2;
+}
+
+.image-shine:hover::before {
+  left: 150%;
+}
+
+.image-shine img {
+  transition: transform 0.5s ease;
+}
+
+.image-shine:hover img {
+  transform: scale(1.05);
 }

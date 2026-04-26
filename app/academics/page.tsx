@@ -1,10 +1,46 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { BookOpen, Microscope, Globe, LayoutList, CheckCircle2, Star, Lightbulb, Compass, Users } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  BookOpen, 
+  Microscope, 
+  Globe, 
+  LayoutList, 
+  CheckCircle2, 
+  Star, 
+  Lightbulb, 
+  Compass, 
+  ChevronDown 
+} from "lucide-react";
+import { useState } from "react";
+
+const curriculumAreas = [
+  {
+    title: "Communication and language development",
+    content: "Communication and language development involves giving children opportunities to experience a rich language environment; to develop their confidence and skills in expressing themselves; and to speak and listen in a range of situations."
+  },
+  {
+    title: "Physical development",
+    content: "We focus on physical health and well-being, helping children to develop coordination, control, and movement. This includes both gross and fine motor skills, ensuring they lead healthy, active lives."
+  },
+  {
+    title: "Personal, social and emotional development",
+    content: "Helping children to develop a positive sense of themselves, and others; to form positive relationships and develop respect for others; to develop social skills and learn how to manage their feelings."
+  },
+  {
+    title: "Literacy development",
+    content: "Literacy development involves encouraging children to link sounds and letters and to begin to read and write. Children must be given access to a wide range of reading materials to ignite their interest."
+  },
+  {
+    title: "Numeracy",
+    content: "Developing and improving skills in counting, understanding and using numbers, calculating simple addition and subtraction problems; and to describe shapes, spaces, and measures."
+  }
+];
 
 export default function Academics() {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
   return (
     <div className="pb-16">
       {/* Header */}
@@ -45,7 +81,7 @@ export default function Academics() {
               </div>
             </div>
             
-            <div className="relative h-[600px] rounded-[3rem] overflow-hidden shadow-2xl group">
+            <div className="relative h-[600px] rounded-[3rem] overflow-hidden shadow-2xl group image-shine">
               <Image src="/images/science_lab.png" alt="Laboratory" fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
               <div className="absolute inset-0 bg-primary/20 group-hover:bg-primary/10 transition-colors"></div>
               <div className="absolute top-10 right-10">
@@ -56,31 +92,70 @@ export default function Academics() {
             </div>
           </div>
 
+          {/* Prime Areas Accordion */}
+          <div className="mb-32">
+            <h2 className="text-4xl font-heading font-bold text-primary mb-2">Prime areas of the curriculum are:</h2>
+            <div className="w-16 h-1 bg-gold rounded-full mb-12"></div>
+
+            <div className="space-y-4">
+              {curriculumAreas.map((area, index) => (
+                <div key={index} className="overflow-hidden rounded-3xl border border-slate-100 shadow-sm transition-all">
+                  <button
+                    onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                    className={`w-full flex items-center justify-between p-6 md:p-8 text-left transition-all ${
+                      openIndex === index ? 'bg-primary text-white' : 'bg-slate-50 text-primary hover:bg-slate-100'
+                    }`}
+                  >
+                    <span className="text-lg md:text-xl font-heading font-bold">{area.title}</span>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                      openIndex === index ? 'bg-gold text-primary rotate-180' : 'bg-white text-primary shadow-sm'
+                    }`}>
+                      <ChevronDown size={24} />
+                    </div>
+                  </button>
+                  <AnimatePresence>
+                    {openIndex === index && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      >
+                        <div className="p-8 md:p-10 bg-white text-slate-600 leading-relaxed text-lg border-t border-slate-50">
+                          {area.content}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Curriculum Deep Dive */}
           <div className="mb-32">
             <div className="text-center mb-20">
-              <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Core Areas</h2>
-              <h3 className="text-4xl font-heading font-bold text-primary">Hybrid Learning Framework</h3>
-              <p className="text-slate-500 max-w-2xl mx-auto mt-6 font-medium">How we integrate the best of both worlds for your child's success.</p>
+              <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Hybrid Framework</h2>
+              <h3 className="text-4xl font-heading font-bold text-primary">Integration Levels</h3>
             </div>
 
             <div className="grid md:grid-cols-3 gap-10">
               {[
                 {
                   title: "Early Years (EYFS)",
-                  desc: "Based on British EYFS principles. We focus on Communication, Language, Physical Development, and Personal, Social, and Emotional growth.",
+                  desc: "Based on British EYFS principles. We focus on Communication, Language, Physical Development, and Personal growth.",
                   icon: Star,
                   areas: ["Phonics & Literacy", "Mathematical Fluency", "Understanding the World", "Creative Expression"]
                 },
                 {
                   title: "Primary (Cambridge + GES)",
-                  desc: "A blend of Cambridge Primary and the GES standard. We emphasize enquiry-based learning while meeting national requirements.",
+                  desc: "A blend of Cambridge Primary and the GES standard. We emphasize enquiry-based learning.",
                   icon: Lightbulb,
                   areas: ["English & Numeracy", "Integrated Science", "ICT & Digital Literacy", "Local Language & Culture"]
                 },
                 {
                   title: "Junior High (BECE + Global)",
-                  desc: "Intensive preparation for the BECE (GES) alongside British critical thinking models for global competitiveness.",
+                  desc: "Intensive preparation for the BECE (GES) alongside British critical thinking models.",
                   icon: Compass,
                   areas: ["Advanced Mathematics", "Scientific Enquiry", "Social Studies", "Pre-Technical Skills"]
                 }
@@ -113,7 +188,7 @@ export default function Academics() {
                <div className="relative z-10">
                  <h3 className="text-3xl font-heading font-bold mb-8">British Pedagogical Model</h3>
                  <p className="text-white/70 text-lg leading-relaxed mb-10 font-medium">
-                   We adopt the enquiry-based learning model from the British curriculum. This encourages students to ask "Why?" and "How?", fostering critical thinking and problem-solving skills from a very young age.
+                   We adopt the enquiry-based learning model from the British curriculum, fostering critical thinking and problem-solving skills.
                  </p>
                  <div className="flex items-center gap-4">
                     <div className="w-12 h-1 bg-gold rounded-full"></div>
@@ -128,7 +203,7 @@ export default function Academics() {
                <div className="relative z-10">
                  <h3 className="text-3xl font-heading font-bold mb-8">GES Value Foundation</h3>
                  <p className="text-white/70 text-lg leading-relaxed mb-10 font-medium">
-                   Our integration of the GES curriculum ensures that our students are deeply rooted in their cultural identity, local languages, and the moral values that are essential for building responsible future leaders in Ghana.
+                   Our integration of the GES curriculum ensures that our students are deeply rooted in their cultural identity and moral values.
                  </p>
                  <div className="flex items-center gap-4">
                     <div className="w-12 h-1 bg-gold rounded-full"></div>
@@ -147,14 +222,13 @@ export default function Academics() {
               <h3 className="text-4xl font-heading font-bold mb-8 leading-tight">Well-Equipped <br/>Laboratories</h3>
               <p className="text-white/70 leading-relaxed text-lg font-medium mb-12">
                 Our commitment to practical education is reflected in our state-of-the-art science laboratories. 
-                Students are encouraged to experiment, discover, and innovate in a safe environment under the guidance of dedicated educators.
               </p>
               <div className="flex items-center gap-4">
                 <div className="h-0.5 w-12 bg-gold"></div>
                 <span className="uppercase tracking-[0.3em] text-xs font-bold text-gold">Innovation Hub</span>
               </div>
             </div>
-            <div className="md:w-1/2 relative h-[500px] md:h-auto">
+            <div className="md:w-1/2 relative h-[500px] md:h-auto image-shine">
               <Image src="/images/science_lab.png" alt="Science Laboratory" fill className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-transparent md:block hidden"></div>
             </div>

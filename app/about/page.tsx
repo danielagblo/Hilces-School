@@ -73,7 +73,7 @@ export default function About() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="relative h-[700px] rounded-[3rem] overflow-hidden shadow-2xl order-1 md:order-2"
+              className="relative h-[700px] rounded-[3rem] overflow-hidden shadow-2xl order-1 md:order-2 image-shine"
             >
               <Image 
                 src="/images/science_lab.png" 

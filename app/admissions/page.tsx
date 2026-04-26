@@ -107,7 +107,7 @@ export default function Admissions() {
       {/* Dormitory Image Section */}
       <section className="py-24 px-4">
         <div className="max-w-7xl mx-auto">
-          <div className="relative h-[600px] rounded-[4rem] overflow-hidden shadow-2xl group">
+          <div className="relative h-[600px] rounded-[4rem] overflow-hidden shadow-2xl group image-shine">
             <Image 
               src="/images/modern_dorm.png" 
               alt="Modern Dormitory Facilities" 
