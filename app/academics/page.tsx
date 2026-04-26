@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { BookOpen, Microscope, Globe, LayoutList, CheckCircle2 } from "lucide-react";
+import { BookOpen, Microscope, Globe, LayoutList, CheckCircle2, Star, Lightbulb, Compass, Users } from "lucide-react";
 
 export default function Academics() {
   return (
@@ -53,6 +53,88 @@ export default function Academics() {
                   Practical <br/>First
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Curriculum Deep Dive */}
+          <div className="mb-32">
+            <div className="text-center mb-20">
+              <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Core Areas</h2>
+              <h3 className="text-4xl font-heading font-bold text-primary">Hybrid Learning Framework</h3>
+              <p className="text-slate-500 max-w-2xl mx-auto mt-6 font-medium">How we integrate the best of both worlds for your child's success.</p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-10">
+              {[
+                {
+                  title: "Early Years (EYFS)",
+                  desc: "Based on British EYFS principles. We focus on Communication, Language, Physical Development, and Personal, Social, and Emotional growth.",
+                  icon: Star,
+                  areas: ["Phonics & Literacy", "Mathematical Fluency", "Understanding the World", "Creative Expression"]
+                },
+                {
+                  title: "Primary (Cambridge + GES)",
+                  desc: "A blend of Cambridge Primary and the GES standard. We emphasize enquiry-based learning while meeting national requirements.",
+                  icon: Lightbulb,
+                  areas: ["English & Numeracy", "Integrated Science", "ICT & Digital Literacy", "Local Language & Culture"]
+                },
+                {
+                  title: "Junior High (BECE + Global)",
+                  desc: "Intensive preparation for the BECE (GES) alongside British critical thinking models for global competitiveness.",
+                  icon: Compass,
+                  areas: ["Advanced Mathematics", "Scientific Enquiry", "Social Studies", "Pre-Technical Skills"]
+                }
+              ].map((stage, idx) => (
+                <div key={idx} className="bg-slate-50 p-12 rounded-[3rem] border border-slate-100 hover:shadow-2xl transition-all group">
+                  <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mb-8 text-white shadow-xl group-hover:rotate-6 transition-transform">
+                    <stage.icon size={32} />
+                  </div>
+                  <h4 className="text-2xl font-heading font-bold text-primary mb-6">{stage.title}</h4>
+                  <p className="text-slate-500 mb-8 font-medium leading-relaxed">{stage.desc}</p>
+                  <ul className="space-y-3">
+                    {stage.areas.map((area, aIdx) => (
+                      <li key={aIdx} className="flex items-center gap-3 text-primary/80 font-bold text-sm">
+                        <div className="w-1.5 h-1.5 bg-gold rounded-full"></div>
+                        {area}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Integration Features */}
+          <div className="grid md:grid-cols-2 gap-10 mb-32">
+            <div className="bg-primary p-12 md:p-16 rounded-[4rem] text-white relative overflow-hidden group">
+               <div className="absolute top-0 right-0 p-12 opacity-5 transform group-hover:scale-150 transition-transform duration-1000">
+                  <Globe size={200} />
+               </div>
+               <div className="relative z-10">
+                 <h3 className="text-3xl font-heading font-bold mb-8">British Pedagogical Model</h3>
+                 <p className="text-white/70 text-lg leading-relaxed mb-10 font-medium">
+                   We adopt the enquiry-based learning model from the British curriculum. This encourages students to ask "Why?" and "How?", fostering critical thinking and problem-solving skills from a very young age.
+                 </p>
+                 <div className="flex items-center gap-4">
+                    <div className="w-12 h-1 bg-gold rounded-full"></div>
+                    <span className="text-gold uppercase tracking-widest text-xs font-bold">Critical Thinking</span>
+                 </div>
+               </div>
+            </div>
+            <div className="bg-slate-900 p-12 md:p-16 rounded-[4rem] text-white relative overflow-hidden group">
+               <div className="absolute top-0 right-0 p-12 opacity-5 transform group-hover:scale-150 transition-transform duration-1000">
+                  <LayoutList size={200} />
+               </div>
+               <div className="relative z-10">
+                 <h3 className="text-3xl font-heading font-bold mb-8">GES Value Foundation</h3>
+                 <p className="text-white/70 text-lg leading-relaxed mb-10 font-medium">
+                   Our integration of the GES curriculum ensures that our students are deeply rooted in their cultural identity, local languages, and the moral values that are essential for building responsible future leaders in Ghana.
+                 </p>
+                 <div className="flex items-center gap-4">
+                    <div className="w-12 h-1 bg-gold rounded-full"></div>
+                    <span className="text-gold uppercase tracking-widest text-xs font-bold">Cultural Heritage</span>
+                 </div>
+               </div>
             </div>
           </div>
 
