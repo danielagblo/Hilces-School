@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { Code, Music, Calculator, Award, Activity, Star } from "lucide-react";
+import { Code, Music, Calculator, Award, Activity, Star, Trophy, Palette, ChevronRight } from "lucide-react";
 
 const activities = [
   {
@@ -43,12 +44,14 @@ export default function Activities() {
     <div className="pb-16">
       {/* Header */}
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-5">
-           <Image src="/images/robotics_class.png" alt="bg" fill className="object-cover" />
+        <div className="absolute inset-0">
+          <Image src="/images/robotics_class.png" alt="Activities Background" fill className="object-cover opacity-20" priority />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent"></div>
         </div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 tracking-tight relative z-10">Beyond the Classroom</h1>
-        <div className="w-24 h-1 bg-gold mx-auto rounded-full mb-8 relative z-10"></div>
-        <p className="text-white/70 max-w-2xl mx-auto text-lg font-medium leading-relaxed relative z-10">
+        <div className="w-24 h-1 bg-gold mx-auto rounded-full mb-8 relative z-10 shadow-[0_0_15px_rgba(249,196,35,0.4)]"></div>
+        <p className="text-white/80 max-w-2xl mx-auto text-lg font-medium leading-relaxed relative z-10">
           Discover a world of opportunities through our diverse co-curricular programs.
         </p>
       </div>
@@ -116,6 +119,60 @@ export default function Activities() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Showcases & Exhibitions */}
+      <section className="py-32 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Celebrating Talent</h2>
+            <h3 className="text-4xl font-heading font-bold text-primary mb-6">Showcases & Exhibitions</h3>
+            <p className="text-slate-500 max-w-2xl mx-auto text-lg font-medium leading-relaxed">
+              Our students don't just learn new skills—they get to shine. We regularly host events where they can demonstrate their talents to parents and peers.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-10">
+            <div className="bg-white p-12 rounded-[3rem] border border-slate-100 flex gap-8 items-start group hover:shadow-xl transition-all">
+              <div className="w-16 h-16 bg-gold/10 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-gold group-hover:text-primary transition-colors text-gold">
+                <Trophy size={32} />
+              </div>
+              <div>
+                <h4 className="text-2xl font-heading font-bold text-primary mb-3">Inter-School Competitions</h4>
+                <p className="text-slate-500 leading-relaxed font-medium">From Robotics tournaments to spelling bees, our students frequently compete and bring home gold, building their resilience and competitive spirit.</p>
+              </div>
+            </div>
+            
+            <div className="bg-white p-12 rounded-[3rem] border border-slate-100 flex gap-8 items-start group hover:shadow-xl transition-all">
+              <div className="w-16 h-16 bg-primary/5 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-gold transition-colors text-primary">
+                <Palette size={32} />
+              </div>
+              <div>
+                <h4 className="text-2xl font-heading font-bold text-primary mb-3">Termly Creative Arts Fair</h4>
+                <p className="text-slate-500 leading-relaxed font-medium">A grand exhibition at the end of every term where parents are invited to watch ballet recitals, music performances, and view art projects.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-32 bg-primary relative overflow-hidden text-center">
+        <div className="absolute inset-0">
+          <Image src="/images/hero_school.png" alt="CTA Background" fill className="object-cover opacity-10" />
+        </div>
+        <div className="absolute top-0 left-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2"></div>
+        <div className="relative z-10 max-w-3xl mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-white mb-6 tracking-tight">
+            Nurture Your Child's <span className="text-gold italic">Potential</span>
+          </h2>
+          <p className="text-xl text-white/80 font-medium mb-12 max-w-2xl mx-auto">
+            Give your child the opportunity to discover their passions in a supportive, world-class environment.
+          </p>
+          <Link href="/admissions" className="inline-flex bg-white hover:bg-slate-100 text-primary px-10 py-4 rounded-full font-bold transition-all transform hover:scale-105 items-center justify-center gap-3 shadow-2xl">
+            Enroll Today <ChevronRight size={20} strokeWidth={3} />
+          </Link>
         </div>
       </section>
     </div>
