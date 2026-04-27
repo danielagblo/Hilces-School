@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   BookOpen, 
@@ -11,7 +12,8 @@ import {
   Star, 
   Lightbulb, 
   Compass, 
-  ChevronDown 
+  ChevronDown,
+  ChevronRight
 } from "lucide-react";
 import { useState } from "react";
 
@@ -45,10 +47,14 @@ export default function Academics() {
     <div className="pb-16">
       {/* Header */}
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gold/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute inset-0">
+          <Image src="/images/robotics_class.png" alt="Academics Background" fill className="object-cover opacity-20" priority />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent"></div>
+        </div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 tracking-tight relative z-10">Academic Excellence</h1>
-        <div className="w-24 h-1 bg-gold mx-auto rounded-full mb-8 relative z-10"></div>
-        <p className="text-white/70 max-w-2xl mx-auto text-lg font-medium leading-relaxed relative z-10">
+        <div className="w-24 h-1 bg-gold mx-auto rounded-full mb-8 relative z-10 shadow-[0_0_15px_rgba(249,196,35,0.4)]"></div>
+        <p className="text-white/80 max-w-2xl mx-auto text-lg font-medium leading-relaxed relative z-10">
           Empowering students through a robust curriculum and hands-on practical experiences.
         </p>
       </div>
@@ -93,24 +99,24 @@ export default function Academics() {
           </div>
 
           {/* Prime Areas Accordion */}
-          <div className="mb-32">
-            <h2 className="text-4xl font-heading font-bold text-primary mb-2">Prime areas of the curriculum are:</h2>
-            <div className="w-16 h-1 bg-gold rounded-full mb-12"></div>
+          <div className="mb-24 max-w-4xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-heading font-bold text-primary mb-2 text-center">Prime Areas of the Curriculum</h2>
+            <div className="w-16 h-1 bg-gold mx-auto rounded-full mb-10"></div>
 
-            <div className="space-y-4">
+            <div className="space-y-3">
               {curriculumAreas.map((area, index) => (
-                <div key={index} className="overflow-hidden rounded-3xl border border-slate-100 shadow-sm transition-all">
+                <div key={index} className="overflow-hidden rounded-2xl border border-slate-100 shadow-sm transition-all">
                   <button
                     onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                    className={`w-full flex items-center justify-between p-6 md:p-8 text-left transition-all ${
+                    className={`w-full flex items-center justify-between p-4 md:p-5 text-left transition-all ${
                       openIndex === index ? 'bg-primary text-white' : 'bg-slate-50 text-primary hover:bg-slate-100'
                     }`}
                   >
-                    <span className="text-lg md:text-xl font-heading font-bold">{area.title}</span>
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                    <span className="text-base md:text-lg font-heading font-bold pr-4">{area.title}</span>
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-all ${
                       openIndex === index ? 'bg-gold text-primary rotate-180' : 'bg-white text-primary shadow-sm'
                     }`}>
-                      <ChevronDown size={24} />
+                      <ChevronDown size={18} />
                     </div>
                   </button>
                   <AnimatePresence>
@@ -119,9 +125,9 @@ export default function Academics() {
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: "auto", opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
                       >
-                        <div className="p-8 md:p-10 bg-white text-slate-600 leading-relaxed text-lg border-t border-slate-50">
+                        <div className="p-5 md:p-6 bg-white text-slate-500 leading-relaxed text-base border-t border-slate-50 font-medium">
                           {area.content}
                         </div>
                       </motion.div>
@@ -233,6 +239,62 @@ export default function Academics() {
               <div className="absolute inset-0 bg-gradient-to-r from-primary to-transparent md:block hidden"></div>
             </div>
           </div>
+
+          {/* Assessment & Progress */}
+          <div className="mt-32">
+            <div className="text-center mb-16">
+              <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Student Evaluation</h2>
+              <h3 className="text-4xl font-heading font-bold text-primary mb-6">Assessment & Progress Tracking</h3>
+              <p className="text-slate-500 max-w-2xl mx-auto text-lg font-medium leading-relaxed">
+                We believe in continuous, holistic evaluation to ensure no child is left behind. 
+                Our assessment model goes beyond simple examinations.
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "Continuous Assessment",
+                  desc: "Regular quizzes, project work, and practical demonstrations to track daily understanding."
+                },
+                {
+                  title: "Termly Reports",
+                  desc: "Comprehensive end-of-term evaluations detailing academic progress and character development."
+                },
+                {
+                  title: "Parent Consultations",
+                  desc: "Dedicated meetings between parents and teachers to align on goals and celebrate achievements."
+                }
+              ].map((item, idx) => (
+                <div key={idx} className="bg-white border-2 border-slate-50 p-10 rounded-3xl hover:border-gold/30 transition-colors group">
+                  <div className="w-16 h-16 bg-primary/5 rounded-2xl flex items-center justify-center mb-6 text-primary group-hover:bg-primary group-hover:text-gold transition-colors">
+                    <CheckCircle2 size={32} />
+                  </div>
+                  <h4 className="text-2xl font-heading font-bold text-primary mb-4">{item.title}</h4>
+                  <p className="text-slate-500 font-medium leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-32 bg-primary relative overflow-hidden text-center">
+        <div className="absolute inset-0">
+          <Image src="/images/hero_school.png" alt="CTA Background" fill className="object-cover opacity-10" />
+        </div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div className="relative z-10 max-w-3xl mx-auto px-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-white mb-6 tracking-tight">
+            Ready to Begin the <span className="text-gold italic">Journey?</span>
+          </h2>
+          <p className="text-xl text-white/80 font-medium mb-12 max-w-2xl mx-auto">
+            Join our community of learners and give your child the foundation they need for a successful future.
+          </p>
+          <Link href="/admissions" className="inline-flex bg-gold hover:bg-gold/90 text-primary px-10 py-4 rounded-full font-bold transition-all transform hover:scale-105 items-center justify-center gap-3 shadow-[0_0_30px_rgba(249,196,35,0.3)]">
+            Apply for Admission <ChevronRight size={20} strokeWidth={3} />
+          </Link>
         </div>
       </section>
     </div>
