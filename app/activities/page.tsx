@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import DynamicImage from "@/components/DynamicImage";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Code, Music, Calculator, Award, Activity, Star, Trophy, Palette, ChevronRight } from "lucide-react";
@@ -47,7 +48,7 @@ export default function Activities() {
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
         <SchoolDoodles />
         <div className="absolute inset-0">
-          <Image src="/images/robotics_class.png" alt="Activities Background" fill className="object-cover opacity-20" priority />
+          <DynamicImage sectionId="activities-hero" defaultSrc="/images/robotics_class.png" alt="Activities Background" fill className="object-cover opacity-20" priority />
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent"></div>
         </div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
@@ -86,8 +87,9 @@ export default function Activities() {
               viewport={{ once: true }}
               className="relative h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden shadow-2xl group image-shine"
             >
-              <Image 
-                src="/images/robotics_class.png" 
+              <DynamicImage 
+                sectionId="activities-main"
+                defaultSrc="/images/robotics_class.png" 
                 alt="Co-curricular activities" 
                 fill 
                 className="object-cover transition-transform duration-1000 group-hover:scale-105"
@@ -180,7 +182,7 @@ export default function Activities() {
       <section className="py-32 bg-primary relative overflow-hidden text-center">
         <SchoolDoodles className="text-white/10" />
         <div className="absolute inset-0">
-          <Image src="/images/hero_school.png" alt="CTA Background" fill className="object-cover opacity-10" />
+          <DynamicImage sectionId="activities-cta" defaultSrc="/images/hero_school.png" alt="CTA Background" fill className="object-cover opacity-10" />
         </div>
         <div className="absolute top-0 left-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2"></div>
         <div className="relative z-10 max-w-3xl mx-auto px-4">

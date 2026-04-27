@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import DynamicImage from "@/components/DynamicImage";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -50,7 +51,7 @@ export default function Academics() {
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
         <SchoolDoodles />
         <div className="absolute inset-0">
-          <Image src="/images/robotics_class.png" alt="Academics Background" fill className="object-cover opacity-20" priority />
+          <DynamicImage sectionId="academics-hero" defaultSrc="/images/robotics_class.png" alt="Academics Background" fill className="object-cover opacity-20" priority />
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent"></div>
         </div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
@@ -97,7 +98,7 @@ export default function Academics() {
             </div>
             
             <div className="relative h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden shadow-2xl group image-shine">
-              <Image src="/images/science_lab.png" alt="Laboratory" fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
+              <DynamicImage sectionId="academics-roots" defaultSrc="/images/science_lab.png" alt="Laboratory" fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
               <div className="absolute inset-0 bg-primary/20 group-hover:bg-primary/10 transition-colors"></div>
               <div className="absolute top-10 right-10">
                 <motion.div 
@@ -242,7 +243,7 @@ export default function Academics() {
           <div className="bg-primary rounded-[3rem] md:rounded-[4rem] overflow-hidden shadow-2xl flex flex-col md:flex-row items-stretch">
             {/* Image Section - Compact on Mobile */}
             <div className="relative h-[250px] md:h-auto md:w-1/2 image-shine">
-              <Image src="/images/science_lab.png" alt="Science Laboratory" fill className="object-cover" />
+              <DynamicImage sectionId="academics-lab" defaultSrc="/images/science_lab.png" alt="Science Laboratory" fill className="object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent md:bg-gradient-to-r md:from-primary/60"></div>
             </div>
 
@@ -321,7 +322,7 @@ export default function Academics() {
       <section className="py-32 bg-primary relative overflow-hidden text-center">
         <SchoolDoodles className="text-white/10" />
         <div className="absolute inset-0">
-          <Image src="/images/hero_school.png" alt="CTA Background" fill className="object-cover opacity-10" />
+          <DynamicImage sectionId="academics-cta" defaultSrc="/images/hero_school.png" alt="CTA Background" fill className="object-cover opacity-10" />
         </div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="relative z-10 max-w-3xl mx-auto px-4">

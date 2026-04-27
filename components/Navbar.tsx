@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import DynamicImage from "@/components/DynamicImage";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -41,8 +42,9 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-3 group">
             <div className="relative w-12 h-12 overflow-hidden rounded-full border-2 border-gold shadow-lg transition-transform group-hover:scale-105">
-              <Image 
-                src="/logo.jpeg" 
+              <DynamicImage 
+                sectionId="global-logo"
+                defaultSrc="/logo.jpeg" 
                 alt="Hilces Logo" 
                 fill 
                 className="object-cover"

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import DynamicImage from "@/components/DynamicImage";
 import { motion } from "framer-motion";
 import { Target, Compass, Award, Globe } from "lucide-react";
 import SchoolDoodles from "@/components/SchoolDoodles";
@@ -12,7 +13,7 @@ export default function About() {
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
         <SchoolDoodles />
         <div className="absolute inset-0 opacity-10">
-          <Image src="/images/hero_school.png" alt="background" fill className="object-cover" />
+          <DynamicImage sectionId="about-hero" defaultSrc="/images/hero_school.png" alt="background" fill className="object-cover" />
         </div>
         <div className="relative z-10">
           <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 tracking-tight">About Hilces</h1>
@@ -119,8 +120,9 @@ export default function About() {
               viewport={{ once: true }}
               className="relative h-[450px] md:h-[700px] rounded-[3rem] overflow-hidden shadow-2xl order-1 md:order-2 image-shine"
             >
-              <Image 
-                src="/images/science_lab.png" 
+              <DynamicImage 
+                sectionId="about-philosophy"
+                defaultSrc="/images/science_lab.png" 
                 alt="Students in laboratory" 
                 fill 
                 className="object-cover"

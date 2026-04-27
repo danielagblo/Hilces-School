@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import DynamicImage from "@/components/DynamicImage";
 import { MessageCircle, Phone, Mail, MapPin } from "lucide-react";
 import { usePathname } from "next/navigation";
 
@@ -255,8 +256,9 @@ export default function Footer() {
             <div>
               <Link href="/" className="flex items-center gap-3 mb-8 group">
                 <div className="relative w-14 h-14 overflow-hidden rounded-full border-2 border-gold shadow-2xl">
-                  <Image 
-                    src="/logo.jpeg" 
+                  <DynamicImage 
+                    sectionId="global-logo"
+                    defaultSrc="/logo.jpeg" 
                     alt="Hilces Logo" 
                     fill 
                     className="object-cover"

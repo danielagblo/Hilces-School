@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import DynamicImage from "@/components/DynamicImage";
 import { motion } from "framer-motion";
 import { Calendar, CheckCircle2, MapPin, MessageCircle, Phone, ArrowRight, ShieldCheck, UserPlus, ClipboardCheck, GraduationCap } from "lucide-react";
 import SchoolDoodles from "@/components/SchoolDoodles";
@@ -13,7 +14,7 @@ export default function Admissions() {
       <section className="relative h-[70vh] min-h-[600px] flex items-center overflow-hidden bg-primary">
         <SchoolDoodles />
         <div className="absolute inset-0">
-           <Image src="/images/hero_school.png" alt="Admissions Hero" fill className="object-cover opacity-30" priority />
+           <DynamicImage sectionId="admissions-hero" defaultSrc="/images/hero_school.png" alt="Admissions Hero" fill className="object-cover opacity-30" priority />
            <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
         </div>
         

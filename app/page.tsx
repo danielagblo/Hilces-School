@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import DynamicImage from "@/components/DynamicImage";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
 import {
   BookOpen,
@@ -108,8 +109,11 @@ function WhimsicalBubble({ feature, idx }: { feature: any, idx: number }) {
 
           style={{ transform: "translate3d(0,0,0)", backfaceVisibility: "hidden" }}
         >
-          <Image
-            src={feature.image}
+          <DynamicImage
+            sectionId={feature.image.includes('curriculum') ? 'home-why-curriculum' : 
+                       feature.image.includes('activity') ? 'home-why-activity' : 
+                       feature.image.includes('teacher') ? 'home-why-mentors' : 'home-why-labs'}
+            defaultSrc={feature.image}
             alt={feature.title}
             fill
             sizes="(max-width: 768px) 256px, 320px"
@@ -195,7 +199,15 @@ export default function Home() {
             transition={{ opacity: { duration: 1.5 }, scale: { duration: 8, ease: "easeOut" } }}
             className="absolute inset-0"
           >
-            <Image src={slides[currentSlide].image} alt={slides[currentSlide].title} fill sizes="100vw" className="object-cover" priority />
+            <DynamicImage 
+              sectionId={`home-slide-${currentSlide + 1}`}
+              defaultSrc={slides[currentSlide].image} 
+              alt={slides[currentSlide].title} 
+              fill 
+              sizes="100vw" 
+              className="object-cover" 
+              priority 
+            />
             {/* Cinematic Gradient Overlay - Dynamic for Mobile */}
             <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/60 to-black/20 md:block hidden"></div>
             <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/40 to-primary/95 md:hidden block"></div>
@@ -270,16 +282,16 @@ export default function Home() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative">
               <div className="absolute inset-0 bg-gold/5 -m-8 rounded-[4rem] -z-10"></div>
               <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} className="relative h-64 sm:h-48 md:h-64 rounded-tl-[4rem] rounded-br-[4rem] overflow-hidden shadow-lg border-4 border-white">
-                <Image src="/images/welcome_reading.png" alt="Reading" fill className="object-cover" />
+                <DynamicImage sectionId="home-welcome-1" defaultSrc="/images/welcome_reading.png" alt="Reading" fill className="object-cover" />
               </motion.div>
               <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} className="relative h-64 sm:h-48 md:h-64 rounded-tr-[4rem] rounded-bl-[4rem] overflow-hidden shadow-lg border-4 border-white">
-                <Image src="/images/welcome_robotics.png" alt="Robotics" fill className="object-cover" />
+                <DynamicImage sectionId="home-welcome-2" defaultSrc="/images/welcome_robotics.png" alt="Robotics" fill className="object-cover" />
               </motion.div>
               <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }} className="relative h-64 sm:h-48 md:h-64 rounded-tr-[4rem] rounded-bl-[4rem] overflow-hidden shadow-lg border-4 border-white">
-                <Image src="/images/science_lab.png" alt="Science Lab" fill className="object-cover" />
+                <DynamicImage sectionId="home-welcome-3" defaultSrc="/images/science_lab.png" alt="Science Lab" fill className="object-cover" />
               </motion.div>
               <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }} className="relative h-64 sm:h-48 md:h-64 rounded-tl-[4rem] rounded-br-[4rem] overflow-hidden shadow-lg border-4 border-white">
-                <Image src="/images/welcome_ict.png" alt="ICT" fill className="object-cover" />
+                <DynamicImage sectionId="home-welcome-4" defaultSrc="/images/welcome_ict.png" alt="ICT" fill className="object-cover" />
               </motion.div>
             </div>
 
@@ -477,7 +489,15 @@ export default function Home() {
                 className="relative h-[550px] md:h-[600px] rounded-[2.5rem] overflow-hidden group shadow-[0_10px_30px_rgba(0,0,0,0.1)] bg-white border border-slate-100"
               >
                 <div className="absolute top-0 left-0 w-full h-[65%]">
-                  <Image src={facility.img} fill alt={facility.title} className="object-cover transition-transform duration-700 md:group-hover:scale-105" />
+                  <DynamicImage 
+                    sectionId={facility.title.includes('Music') ? 'home-facility-1' : 
+                               facility.title.includes('Science') ? 'home-facility-2' : 
+                               facility.title.includes('Dormitories') ? 'home-facility-3' : 'home-facility-4'}
+                    defaultSrc={facility.img} 
+                    fill 
+                    alt={facility.title} 
+                    className="object-cover transition-transform duration-700 md:group-hover:scale-105" 
+                  />
                 </div>
 
                 {/* Colored bottom section with curve */}
@@ -580,13 +600,13 @@ export default function Home() {
             {/* Right Column: Ultra-Compact Collage */}
             <div className="relative w-full lg:w-1/2 h-[320px] hidden lg:block">
               <motion.div animate={{ y: [0, -5, 0] }} transition={{ duration: 4, repeat: Infinity }} className="absolute top-0 right-10 w-48 h-48 rounded-full border-[4px] border-white overflow-hidden shadow-lg z-20">
-                <Image src="/images/activity_feature.png" alt="S1" fill className="object-cover" sizes="192px" />
+                <DynamicImage sectionId="home-review-1" defaultSrc="/images/activity_feature.png" alt="S1" fill className="object-cover" sizes="192px" />
               </motion.div>
               <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 5, repeat: Infinity }} className="absolute top-20 right-40 w-44 h-44 rounded-full border-[4px] border-white overflow-hidden shadow-lg z-10">
-                <Image src="/images/lab_feature.png" alt="S2" fill className="object-cover" sizes="176px" />
+                <DynamicImage sectionId="home-review-2" defaultSrc="/images/lab_feature.png" alt="S2" fill className="object-cover" sizes="176px" />
               </motion.div>
               <motion.div animate={{ x: [0, 5, 0] }} transition={{ duration: 6, repeat: Infinity }} className="absolute bottom-5 right-5 w-40 h-40 rounded-full border-[4px] border-white overflow-hidden shadow-lg z-30">
-                <Image src="/images/curriculum_feature.png" alt="S3" fill className="object-cover" sizes="160px" />
+                <DynamicImage sectionId="home-review-3" defaultSrc="/images/curriculum_feature.png" alt="S3" fill className="object-cover" sizes="160px" />
               </motion.div>
             </div>
           </div>
