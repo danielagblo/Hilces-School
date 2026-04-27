@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
-import { 
-  BookOpen, 
-  Microscope, 
-  Users, 
+import {
+  BookOpen,
+  Microscope,
+  Users,
   Activity,
   ChevronRight,
   ChevronLeft,
@@ -14,7 +14,12 @@ import {
   Star,
   Music,
   PenTool,
-  Zap
+  Zap,
+  Rocket,
+  Heart,
+  Pencil,
+  Paperclip,
+  Smile
 } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
@@ -54,17 +59,17 @@ const slides = [
 
 function WhimsicalBubble({ feature, idx }: { feature: any, idx: number }) {
   const isEven = idx % 2 === 0;
-  
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ 
-        type: "spring", 
-        stiffness: 200, 
-        damping: 20, 
-        delay: idx * 0.05 
+      transition={{
+        type: "spring",
+        stiffness: 200,
+        damping: 20,
+        delay: idx * 0.05
       }}
       className={`relative flex flex-col items-center group ${isEven ? 'md:translate-y-16' : ''}`}
     >
@@ -82,22 +87,22 @@ function WhimsicalBubble({ feature, idx }: { feature: any, idx: number }) {
       >
         {/* The Hover Bubble - Snappy Transition */}
         <motion.div
-          whileHover={{ 
+          whileHover={{
             scale: 1.05,
-            transition: { duration: 0.15, ease: [0.23, 1, 0.32, 1] } 
+            transition: { duration: 0.15, ease: [0.23, 1, 0.32, 1] }
           }}
           className="relative w-64 h-64 md:w-80 md:h-80 rounded-[3.5rem] overflow-hidden shadow-[0_15px_40px_rgba(10,77,162,0.12)] border-[3px] border-white group-hover:border-gold transition-colors duration-150 isolate bg-slate-900"
           style={{ transform: "translate3d(0,0,0)", backfaceVisibility: "hidden" }}
         >
-          <Image 
-            src={feature.image} 
-            alt={feature.title} 
-            fill 
+          <Image
+            src={feature.image}
+            alt={feature.title}
+            fill
             sizes="(max-width: 768px) 256px, 320px"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent to-primary/60 opacity-60"></div>
-          
+
           {/* Floating Icon inside bubble */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="bg-white/10 backdrop-blur-md p-6 rounded-3xl border border-white/20 text-white shadow-2xl transition-transform duration-300 group-hover:scale-110">
@@ -121,7 +126,7 @@ function WhimsicalBubble({ feature, idx }: { feature: any, idx: number }) {
 
       {/* Decorative Sparkle */}
       <motion.div
-        animate={{ 
+        animate={{
           scale: [1, 1.2, 1],
           opacity: [0.4, 0.8, 0.4],
           rotate: [0, 180, 360]
@@ -132,6 +137,34 @@ function WhimsicalBubble({ feature, idx }: { feature: any, idx: number }) {
         <Star size={24} className="fill-gold" />
       </motion.div>
     </motion.div>
+  );
+}
+
+function SchoolDoodles({ className = "text-white opacity-20" }: { className?: string }) {
+  return (
+    <div className={`absolute inset-0 overflow-hidden pointer-events-none ${className}`}>
+      <motion.div animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute top-10 left-[10%]">
+        <Rocket size={80} strokeWidth={1} />
+      </motion.div>
+      <motion.div animate={{ scale: [1, 1.1, 1], rotate: [-10, 0, -10] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute top-20 right-[20%]">
+        <Heart size={60} strokeWidth={1.5} />
+      </motion.div>
+      <motion.div animate={{ rotate: [0, 360] }} transition={{ duration: 40, repeat: Infinity, ease: "linear" }} className="absolute bottom-20 left-[15%]">
+        <Star size={70} strokeWidth={1.2} />
+      </motion.div>
+      <motion.div animate={{ y: [0, 15, 0], rotate: [15, 0, 15] }} transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }} className="absolute top-40 left-[40%]">
+        <Music size={50} strokeWidth={1.5} />
+      </motion.div>
+      <motion.div animate={{ x: [0, 10, 0], y: [0, -10, 0] }} transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }} className="absolute bottom-16 right-[15%]">
+        <Pencil size={90} strokeWidth={1} className="-rotate-45" />
+      </motion.div>
+      <motion.div animate={{ scale: [1, 1.05, 1] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }} className="absolute top-1/2 left-[5%]">
+        <Smile size={100} strokeWidth={1} />
+      </motion.div>
+      <motion.div animate={{ rotate: [45, 60, 45] }} transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }} className="absolute top-1/3 right-[5%]">
+        <Paperclip size={70} strokeWidth={1.2} />
+      </motion.div>
+    </div>
   );
 }
 
@@ -164,92 +197,85 @@ export default function Home() {
 
   return (
     <div className="overflow-x-hidden">
-      {/* Hero Slideshow Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-[#03152d]">
+      {/* Modern Cinematic Hero Section */}
+      <section className="relative h-screen flex items-center overflow-hidden bg-primary">
         <AnimatePresence>
           <motion.div
             key={currentSlide}
-            initial={{ opacity: 0, scale: 1 }}
-            animate={{ opacity: 1, scale: 1.1 }}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ 
-              opacity: { duration: 1.5 },
-              scale: { duration: 8, ease: "linear" }
-            }}
+            transition={{ opacity: { duration: 1.5 }, scale: { duration: 8, ease: "easeOut" } }}
             className="absolute inset-0"
           >
-            <Image 
-              src={slides[currentSlide].image} 
-              alt={slides[currentSlide].title} 
-              fill 
-              sizes="100vw"
-              className="object-cover opacity-60"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#03152d] via-transparent to-transparent"></div>
+            <Image src={slides[currentSlide].image} alt={slides[currentSlide].title} fill sizes="100vw" className="object-cover" priority />
+            {/* Cinematic Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/60 to-black/20"></div>
           </motion.div>
         </AnimatePresence>
         
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30 }}
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 50 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="bg-black/20 backdrop-blur-md p-10 md:p-14 rounded-[3rem] border border-white/10 shadow-2xl"
+              className="max-w-3xl"
             >
-              <span className="inline-block py-1.5 px-4 rounded-full bg-gold/20 border border-gold/30 text-gold font-bold text-[10px] uppercase tracking-widest mb-6 backdrop-blur-md">
+              <div className="inline-flex items-center gap-3 py-1.5 px-4 rounded-full bg-white/10 border border-white/20 text-gold font-bold text-[10px] uppercase tracking-widest mb-8 backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
                 {slides[currentSlide].badge}
-              </span>
-              <h1 className="text-4xl md:text-7xl font-heading font-bold text-white mb-6 leading-[1.1] tracking-tight">
+              </div>
+              
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-8 leading-[1.05] tracking-tight">
                 {slides[currentSlide].title.split(" ").slice(0, -2).join(" ")} <br />
-                <span className="text-gold">{slides[currentSlide].title.split(" ").slice(-2).join(" ")}</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200 italic pr-2">
+                  {slides[currentSlide].title.split(" ").slice(-2).join(" ")}
+                </span>
               </h1>
-              <p className="text-base md:text-lg text-white/90 mb-10 max-w-xl mx-auto font-medium leading-relaxed">
+              
+              <p className="text-lg md:text-xl text-white/90 mb-12 max-w-xl font-medium leading-relaxed border-l-4 border-gold pl-6">
                 {slides[currentSlide].subtitle}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/admissions" className="bg-gold hover:bg-gold/90 text-primary px-8 py-3.5 rounded-full font-bold transition-all transform hover:scale-105 flex items-center justify-center gap-2 shadow-2xl shadow-gold/20">
-                  Apply Today <ChevronRight size={20} />
+              
+              <div className="flex flex-col sm:flex-row gap-5">
+                <Link href="/admissions" className="bg-gold hover:bg-gold/90 text-primary px-10 py-4 rounded-full font-bold transition-all transform hover:scale-105 flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(249,196,35,0.3)]">
+                  Apply Today <ChevronRight size={20} strokeWidth={3} />
                 </Link>
-                <Link href="/about" className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 px-8 py-3.5 rounded-full font-bold transition-all flex items-center justify-center">
-                  Our Story
+                <Link href="/about" className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 px-10 py-4 rounded-full font-bold transition-all flex items-center justify-center"> 
+                  Discover Our Story 
                 </Link>
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* Navigation Arrows */}
-        <button 
-          onClick={prevSlide}
-          className="absolute left-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-primary transition-all backdrop-blur-md"
-        >
-          <ChevronLeft size={24} />
-        </button>
-        <button 
-          onClick={nextSlide}
-          className="absolute right-6 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-gold hover:text-primary transition-all backdrop-blur-md"
-        >
-          <ChevronRight size={24} />
-        </button>
+        {/* Modern Bottom Controls */}
+        <div className="absolute bottom-10 right-4 md:right-10 z-20 flex flex-col md:flex-row items-end md:items-center gap-8">
+          {/* Slide Indicators */}
+          <div className="flex gap-3">
+            {slides.map((_, idx) => (
+              <button key={idx} onClick={() => setCurrentSlide(idx)} className={`h-1.5 rounded-full transition-all duration-500 ${currentSlide === idx ? 'w-12 bg-gold shadow-[0_0_10px_rgba(249,196,35,0.5)]' : 'w-4 bg-white/40 hover:bg-white/60'}`} />
+            ))}
+          </div>
 
-        {/* Slide Indicators */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex gap-3">
-          {slides.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentSlide(idx)}
-              className={`h-1.5 rounded-full transition-all duration-500 ${currentSlide === idx ? 'w-10 bg-gold' : 'w-4 bg-white/30'}`}
-            />
-          ))}
+          {/* Navigation Arrows */}
+          <div className="flex gap-2 bg-black/30 backdrop-blur-md p-2 rounded-full border border-white/10">
+            <button onClick={prevSlide} className="w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"> 
+              <ChevronLeft size={24} /> 
+            </button>
+            <button onClick={nextSlide} className="w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"> 
+              <ChevronRight size={24} /> 
+            </button>
+          </div>
         </div>
       </section>
 
       {/* WHY CHOOSE US - STABILIZED WHIMSICAL EDITION */}
       <section className="py-48 bg-white relative overflow-hidden">
+        <SchoolDoodles className="text-gold/30" />
         {/* Animated Background Doodles - Fixed Hydration */}
         <div className="absolute inset-0 pointer-events-none">
           {mounted && iconPositions.map((pos, i) => (
@@ -274,7 +300,7 @@ export default function Home() {
               {pos.type === 0 ? <Music size={48} /> : pos.type === 1 ? <PenTool size={32} /> : pos.type === 2 ? <Globe size={40} /> : <Zap size={24} />}
             </motion.div>
           ))}
-          
+
           {/* Animated Connective Path */}
           <svg className="absolute inset-0 w-full h-full opacity-5">
             <motion.path
@@ -299,12 +325,12 @@ export default function Home() {
             >
               <span className="text-[10px] font-black tracking-[0.4em] text-primary/30 uppercase mb-4 block">Unrivaled Excellence</span>
               <h3 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-primary leading-[1.1] tracking-tight">
-                Why Choose <br/>
+                Why Choose <br />
                 <span className="text-gold italic font-black">Hilces International?</span>
               </h3>
               <div className="w-20 h-1 bg-gold mt-6 rounded-full shadow-[0_0_15px_rgba(249,196,35,0.4)]"></div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -320,27 +346,27 @@ export default function Home() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-8">
             {[
-              { 
-                icon: BookOpen, 
-                title: "Hybrid Curriculum", 
+              {
+                icon: BookOpen,
+                title: "Hybrid Curriculum",
                 desc: "A blend of British standards and GES local values for global success.",
                 image: "/images/curriculum_feature.png"
               },
-              { 
-                icon: Activity, 
-                title: "Activity Learning", 
+              {
+                icon: Activity,
+                title: "Activity Learning",
                 desc: "Hands-on projects that make complex concepts fun and memorable.",
                 image: "/images/activity_feature.png"
               },
-              { 
-                icon: Users, 
-                title: "Expert Mentors", 
+              {
+                icon: Users,
+                title: "Expert Mentors",
                 desc: "Dedicated teachers who nurture every child's individual genius.",
                 image: "/images/teacher_feature.png"
               },
-              { 
-                icon: Microscope, 
-                title: "Modern Labs", 
+              {
+                icon: Microscope,
+                title: "Modern Labs",
                 desc: "Equipped Hubs for science, tech, and practical exploration.",
                 image: "/images/lab_feature.png"
               }
@@ -353,10 +379,11 @@ export default function Home() {
 
       {/* Ultra-Compact Testimonials Section */}
       <section className="py-12 bg-slate-50 relative overflow-hidden">
+        <SchoolDoodles className="text-primary/15" />
         <div className="absolute top-0 right-0 p-8 opacity-5 text-primary pointer-events-none">
           <Star size={100} />
         </div>
-        
+
         <div className="max-w-5xl mx-auto px-4 relative z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
             {/* Left Column: Header + Bubble */}
@@ -374,7 +401,7 @@ export default function Home() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     className="bg-primary p-10 md:p-14 text-white relative shadow-[0_40px_100px_-15px_rgba(10,77,162,0.4)] border border-white/10 max-w-[420px] group isolate"
-                    style={{ 
+                    style={{
                       borderRadius: "60% 40% 70% 30% / 40% 50% 60% 50%",
                       transform: "translateZ(0)"
                     }}
@@ -390,7 +417,7 @@ export default function Home() {
                       <h4 className="text-2xl md:text-3xl font-heading font-bold text-white mb-2">
                         {["Mrs. Ama Boateng", "Mr. Kwabena Mensah", "Dr. Sarah Appiah"][currentSlide % 3]}
                       </h4>
-                      
+
                       <div className="flex gap-1 mb-6 text-gold">
                         {[...Array(5)].map((_, i) => <Star key={i} size={16} className="fill-current" />)}
                       </div>
@@ -405,13 +432,13 @@ export default function Home() {
                     </div>
                   </motion.div>
                 </AnimatePresence>
-                
+
                 <div className="flex gap-2.5 mt-8 justify-center lg:justify-start lg:ml-10">
                   {[0, 1, 2].map((i) => (
-                    <button 
-                      key={i} 
-                      onClick={() => setCurrentSlide(i)} 
-                      className={`h-3 rounded-full transition-all duration-300 ${ (currentSlide % 3) === i ? 'w-10 bg-red-600' : 'w-3 bg-slate-300' }`} 
+                    <button
+                      key={i}
+                      onClick={() => setCurrentSlide(i)}
+                      className={`h-3 rounded-full transition-all duration-300 ${(currentSlide % 3) === i ? 'w-10 bg-red-600' : 'w-3 bg-slate-300'}`}
                     />
                   ))}
                 </div>
@@ -434,30 +461,56 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured Quote */}
-      <section className="py-32 bg-primary text-white overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+      {/* Compact Mission Card Section */}
+      <section className="py-12 bg-slate-50 relative z-20">
+        <div className="max-w-5xl mx-auto px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="bg-primary rounded-[2.5rem] p-8 md:p-12 text-center shadow-[0_20px_50px_-15px_rgba(10,77,162,0.4)] border border-white/10 relative overflow-hidden"
+          >
+            {/* Decorative BG */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+            
+            <span className="text-gold font-bold tracking-[0.4em] text-[10px] uppercase mb-4 block relative z-10">Our Mission</span>
+            
+            <div className="relative z-10 max-w-3xl mx-auto">
+              <span className="text-4xl text-gold/30 font-serif absolute -top-4 -left-6 leading-none">“</span>
+              <p className="text-xl md:text-2xl lg:text-3xl font-heading font-medium italic text-white leading-relaxed">
+                To provide an enabling and thriving environment, and to produce well-mannered and responsible future leaders.
+              </p>
+              <span className="text-4xl text-gold/30 font-serif absolute -bottom-8 -right-6 leading-none rotate-180">“</span>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Whimsical School Doodles Banner */}
+      <section className="py-24 bg-primary relative overflow-hidden">
+        <SchoolDoodles />
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <motion.div
+          <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
           >
-            <div className="text-7xl text-gold/20 font-serif mb-6 leading-none">“</div>
-            <p className="text-3xl md:text-4xl font-heading font-medium italic mb-10 leading-relaxed">
-              Our mission is to provide an enabling and thriving environment, and to produce well-mannered and responsible future leaders.
+            <h2 className="text-4xl md:text-6xl font-heading font-black text-white mb-6 tracking-tight">
+              Discover the <span className="text-gold italic">Joy</span> of Learning
+            </h2>
+            <p className="text-xl text-white/80 font-medium mb-10 max-w-2xl mx-auto">
+              Where imagination takes flight, curiosity is celebrated, and every child is empowered to be a star.
             </p>
-            <div className="flex items-center justify-center gap-6">
-              <div className="w-16 h-1 bg-gold rounded-full"></div>
-              <span className="uppercase tracking-[0.5em] text-xs font-bold text-gold">Our Mission</span>
-              <div className="w-16 h-1 bg-gold rounded-full"></div>
-            </div>
+            <Link href="/admissions" className="inline-flex bg-gold hover:bg-gold/90 text-primary px-10 py-4 rounded-full font-bold transition-all transform hover:scale-105 items-center justify-center gap-3 shadow-[0_0_30px_rgba(249,196,35,0.3)]">
+              Join Our Family <ChevronRight size={20} strokeWidth={3} />
+            </Link>
           </motion.div>
         </div>
       </section>
 
       {/* Quick Links Section */}
       <section className="py-32 bg-slate-50 relative overflow-hidden">
+        <SchoolDoodles className="text-primary/15" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid md:grid-cols-3 gap-10">
             {[
