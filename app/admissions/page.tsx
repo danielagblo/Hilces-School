@@ -145,32 +145,7 @@ export default function Admissions() {
          </div>
       </section>
 
-      {/* Boarding Image Section (Footer anchor) */}
-      <section className="py-24 bg-primary relative overflow-hidden">
-        <SchoolDoodles className="text-white/10" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="relative h-[500px] rounded-[4rem] overflow-hidden shadow-2xl group image-shine border border-white/10">
-            <Image 
-              src="/images/modern_dorm.png" 
-              alt="Modern Dormitory Facilities" 
-              fill 
-              className="object-cover transition-transform duration-1000 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-colors"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent"></div>
-            <div className="absolute bottom-16 left-16 text-white max-w-xl">
-              <div className="flex items-center gap-3 mb-6">
-                 <ShieldCheck className="text-gold" size={32} />
-                 <div className="bg-gold/20 backdrop-blur-md text-gold inline-block px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-widest border border-gold/30">Secure Boarding</div>
-              </div>
-              <h4 className="text-4xl md:text-5xl font-heading font-bold mb-4 leading-tight">A Home Away From Home</h4>
-              <p className="text-white/80 text-lg font-medium leading-relaxed">
-                Our serene and secure boarding facilities are designed for the comfort, well-being, and academic focus of our students.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+
     </div>
   );
 }
