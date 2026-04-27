@@ -2,127 +2,170 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Calendar, CheckCircle2, Home, MessageCircle, Phone, ArrowRight, ShieldCheck } from "lucide-react";
+import { Calendar, CheckCircle2, MapPin, MessageCircle, Phone, ArrowRight, ShieldCheck, UserPlus, ClipboardCheck, GraduationCap } from "lucide-react";
 import SchoolDoodles from "@/components/SchoolDoodles";
+import EnrollmentForm from "@/components/EnrollmentForm";
 
 export default function Admissions() {
   return (
-    <div className="pb-16">
-      {/* Header */}
-      <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
+    <div className="pb-0">
+      {/* Cinematic Hero */}
+      <section className="relative h-[70vh] min-h-[600px] flex items-center overflow-hidden bg-primary">
         <SchoolDoodles />
-        <div className="absolute top-0 right-0 w-full h-full opacity-10">
-           <Image src="/images/hero_school.png" alt="bg" fill className="object-cover" />
+        <div className="absolute inset-0">
+           <Image src="/images/hero_school.png" alt="Admissions Hero" fill className="object-cover opacity-30" priority />
+           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/60 to-transparent"></div>
         </div>
-        <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 tracking-tight relative z-10">Join Our Family</h1>
-        <div className="w-24 h-1 bg-gold mx-auto rounded-full mb-8 relative z-10"></div>
-        <p className="text-white/70 max-w-2xl mx-auto text-lg font-medium leading-relaxed relative z-10">
-          We are currently admitting students from 6 months to JHS 3. Start your child's journey today.
-        </p>
-      </div>
+        
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="inline-flex items-center gap-3 py-1.5 px-4 rounded-full bg-white/10 border border-white/20 text-gold font-bold text-[10px] uppercase tracking-widest mb-8 backdrop-blur-md">
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              Admissions Now Open
+            </div>
+            <h1 className="text-5xl md:text-7xl font-heading font-bold text-white mb-6 tracking-tight leading-tight">
+              Begin Your Journey <br/>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200 italic pr-2">at Hilces</span>
+            </h1>
+            <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto font-medium leading-relaxed">
+              We are currently accepting applications from Creche (6 months+) through to Junior High School. Join a community built on academic excellence and strong moral values.
+            </p>
+          </motion.div>
+        </div>
+      </section>
 
-      {/* Admissions Info */}
+      {/* The Admissions Process */}
       <section className="py-32 bg-white relative overflow-hidden">
         <SchoolDoodles className="text-primary/5" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-24 items-start">
-            <div>
-              <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Enrollment</h2>
-              <h3 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-8 leading-tight">Welcome to Hilces</h3>
-              <p className="text-slate-500 text-lg leading-relaxed mb-12 font-medium">
-                We provide a nurturing environment for children at every stage of their early development. Our admissions are currently open for:
-              </p>
-              
-              <div className="space-y-6 mb-16">
-                {[
-                  "Early Childhood (from 6 months+)",
-                  "Primary Department",
-                  "Junior High School (up to JHS 3)"
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-5 group">
-                    <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center group-hover:bg-primary transition-colors">
-                      <CheckCircle2 className="text-primary group-hover:text-white transition-colors" size={24} />
-                    </div>
-                    <span className="text-xl font-bold text-primary/80 group-hover:text-primary transition-colors">{item}</span>
-                  </div>
-                ))}
+          <div className="text-center mb-20">
+             <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Simple Steps</h2>
+             <h3 className="text-4xl font-heading font-bold text-primary">The Admission Process</h3>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-10">
+            {[
+              { icon: UserPlus, step: "01", title: "Inquire & Visit", desc: "Reach out to our admissions office to schedule a campus tour or ask any questions you might have." },
+              { icon: ClipboardCheck, step: "02", title: "Apply Online", desc: "Fill out the detailed enrollment form below to officially submit your child's application." },
+              { icon: GraduationCap, step: "03", title: "Enroll & Start", desc: "Once reviewed, you'll receive an admission letter and the necessary materials to start the term." }
+            ].map((item, idx) => (
+              <div key={idx} className="bg-slate-50 p-12 rounded-[3rem] border border-slate-100 relative group hover:shadow-2xl transition-all">
+                <div className="absolute top-10 right-10 text-6xl font-heading font-bold text-slate-200 group-hover:text-gold/20 transition-colors">{item.step}</div>
+                <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center text-white mb-8 shadow-xl group-hover:scale-110 transition-transform">
+                  <item.icon size={32} />
+                </div>
+                <h4 className="text-2xl font-heading font-bold text-primary mb-4 relative z-10">{item.title}</h4>
+                <p className="text-slate-500 font-medium leading-relaxed relative z-10">{item.desc}</p>
               </div>
-
-              <div className="bg-primary text-white p-12 rounded-[3.5rem] border border-primary relative overflow-hidden group shadow-2xl">
-                <div className="absolute top-0 right-0 p-8 opacity-10 transform translate-x-4 -translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-700">
-                   <Home size={120} />
-                </div>
-                <div className="relative z-10">
-                  <h3 className="text-2xl md:text-3xl font-heading font-bold mb-6 flex items-center gap-4">
-                    <ShieldCheck className="text-gold" size={32} />
-                    Boarding House
-                  </h3>
-                  <p className="text-white/70 leading-relaxed text-lg font-medium">
-                    Our serene boarding facilities feature modern dormitories, providing a safe and comfortable 'home away from home'. Designed to foster discipline and community.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-slate-50 p-12 md:p-16 rounded-[4rem] border border-slate-100 shadow-2xl relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2"></div>
-              <h3 className="text-3xl font-heading font-bold text-primary mb-8">Inquiry Office</h3>
-              <p className="text-slate-500 mb-12 font-medium">Ready to take the first step? Schedule a tour or begin the registration process with our admissions office.</p>
-              
-              <div className="space-y-8">
-                <div className="flex items-center gap-6 group">
-                  <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center shadow-xl group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                    <Phone className="text-primary group-hover:text-white transition-colors" size={28} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Call Us</p>
-                    <a href="tel:0247704801" className="text-2xl font-bold text-primary hover:text-gold transition-colors">0247704801</a>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-6 group">
-                  <div className="w-16 h-16 bg-white rounded-3xl flex items-center justify-center shadow-xl group-hover:bg-[#25D366] group-hover:text-white transition-all duration-500">
-                    <MessageCircle className="text-[#25D366] group-hover:text-white transition-colors" size={28} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">WhatsApp</p>
-                    <a href="https://wa.me/233247704801" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold text-primary hover:text-[#25D366] transition-colors">Admission Chat</a>
-                  </div>
-                </div>
-
-                <div className="pt-10">
-                  <a 
-                    href="https://wa.me/233247704801" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="w-full bg-gold hover:bg-gold/90 text-primary py-6 rounded-[2rem] font-bold text-xl flex items-center justify-center gap-3 transition-all transform hover:scale-[1.02] shadow-2xl shadow-gold/20"
-                  >
-                    <Calendar size={26} />
-                    Schedule a Visit <ArrowRight size={20} />
-                  </a>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Dormitory Image Section */}
-      <section className="py-24 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative h-[600px] rounded-[4rem] overflow-hidden shadow-2xl group image-shine">
+      {/* Online Application Form */}
+      <section className="py-32 bg-slate-50 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gold/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/3"></div>
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+           <div className="text-center mb-16">
+             <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Apply Now</h2>
+             <h3 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-6">Online Enrollment</h3>
+             <p className="text-slate-500 text-lg font-medium max-w-2xl mx-auto">
+               Ready to join the family? Complete our comprehensive online form and our admissions team will contact you immediately.
+             </p>
+           </div>
+           
+           <EnrollmentForm />
+        </div>
+      </section>
+
+      {/* Location & Inquiry (Map Section) */}
+      <section className="py-32 bg-white relative overflow-hidden">
+         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              {/* Left: Contact Info */}
+              <div>
+                <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Visit Us</h2>
+                <h3 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-8 leading-tight">Inquiry & Location</h3>
+                <p className="text-slate-500 text-lg leading-relaxed mb-12 font-medium">
+                  Our doors are always open for prospective parents. Use the map to locate our campus, or reach out directly to schedule an appointment.
+                </p>
+                
+                <div className="space-y-8">
+                  <div className="flex items-center gap-6 group">
+                    <div className="w-16 h-16 bg-slate-50 rounded-3xl flex items-center justify-center shadow-inner group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                      <Phone className="text-primary group-hover:text-white transition-colors" size={28} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Call Us</p>
+                      <a href="tel:0247704801" className="text-2xl font-bold text-primary hover:text-gold transition-colors">0247704801</a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-6 group">
+                    <div className="w-16 h-16 bg-slate-50 rounded-3xl flex items-center justify-center shadow-inner group-hover:bg-[#25D366] group-hover:text-white transition-all duration-500">
+                      <MessageCircle className="text-[#25D366] group-hover:text-white transition-colors" size={28} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">WhatsApp</p>
+                      <a href="https://wa.me/233247704801" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold text-primary hover:text-[#25D366] transition-colors">Admission Chat</a>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-6 group">
+                    <div className="w-16 h-16 bg-slate-50 rounded-3xl flex items-center justify-center shadow-inner group-hover:bg-gold group-hover:text-white transition-all duration-500">
+                      <MapPin className="text-primary group-hover:text-white transition-colors" size={28} />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Campus Location</p>
+                      <p className="text-lg font-bold text-primary">Hilces International School, Ghana</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: Map */}
+              <div className="relative h-[600px] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-slate-50">
+                 <iframe 
+                    src="https://maps.google.com/maps?q=Hilces%20International%20School%20Ghana&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0 }} 
+                    allowFullScreen={true} 
+                    loading="lazy" 
+                    referrerPolicy="no-referrer-when-downgrade"
+                 ></iframe>
+              </div>
+            </div>
+         </div>
+      </section>
+
+      {/* Boarding Image Section (Footer anchor) */}
+      <section className="py-24 bg-primary relative overflow-hidden">
+        <SchoolDoodles className="text-white/10" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="relative h-[500px] rounded-[4rem] overflow-hidden shadow-2xl group image-shine border border-white/10">
             <Image 
               src="/images/modern_dorm.png" 
               alt="Modern Dormitory Facilities" 
               fill 
               className="object-cover transition-transform duration-1000 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-primary/30 group-hover:bg-primary/20 transition-colors"></div>
+            <div className="absolute inset-0 bg-primary/40 group-hover:bg-primary/20 transition-colors"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/20 to-transparent"></div>
             <div className="absolute bottom-16 left-16 text-white max-w-xl">
-              <div className="bg-gold text-primary inline-block px-6 py-2 rounded-full font-bold text-xs uppercase tracking-widest mb-6">World Class Facilities</div>
-              <h4 className="text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight">Modern Living Spaces</h4>
-              <p className="text-white/80 text-xl font-medium leading-relaxed">
-                A serene and secure environment designed for the comfort, well-being, and academic focus of our boarding students.
+              <div className="flex items-center gap-3 mb-6">
+                 <ShieldCheck className="text-gold" size={32} />
+                 <div className="bg-gold/20 backdrop-blur-md text-gold inline-block px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-widest border border-gold/30">Secure Boarding</div>
+              </div>
+              <h4 className="text-4xl md:text-5xl font-heading font-bold mb-4 leading-tight">A Home Away From Home</h4>
+              <p className="text-white/80 text-lg font-medium leading-relaxed">
+                Our serene and secure boarding facilities are designed for the comfort, well-being, and academic focus of our students.
               </p>
             </div>
           </div>
