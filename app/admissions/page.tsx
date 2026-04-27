@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Calendar, CheckCircle2, Home, MessageCircle, Phone, ArrowRight, ShieldCheck } from "lucide-react";
+import SchoolDoodles from "@/components/SchoolDoodles";
 
 export default function Admissions() {
   return (
     <div className="pb-16">
       {/* Header */}
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
+        <SchoolDoodles />
         <div className="absolute top-0 right-0 w-full h-full opacity-10">
            <Image src="/images/hero_school.png" alt="bg" fill className="object-cover" />
         </div>
@@ -20,8 +22,9 @@ export default function Admissions() {
       </div>
 
       {/* Admissions Info */}
-      <section className="py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-32 bg-white relative overflow-hidden">
+        <SchoolDoodles className="text-primary/5" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-24 items-start">
             <div>
               <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Enrollment</h2>

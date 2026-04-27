@@ -3,12 +3,14 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Target, Compass, Award, Globe } from "lucide-react";
+import SchoolDoodles from "@/components/SchoolDoodles";
 
 export default function About() {
   return (
     <div className="pb-16">
       {/* Header */}
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
+        <SchoolDoodles />
         <div className="absolute inset-0 opacity-10">
           <Image src="/images/hero_school.png" alt="background" fill className="object-cover" />
         </div>
@@ -23,6 +25,7 @@ export default function About() {
 
       {/* Core Philosophy / Introduction */}
       <section className="py-32 bg-slate-50 relative overflow-hidden">
+        <SchoolDoodles className="text-primary/5" />
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
@@ -52,8 +55,9 @@ export default function About() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-32 bg-white relative overflow-hidden">
+        <SchoolDoodles className="text-primary/5" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid md:grid-cols-2 gap-20 items-center">
             <div className="order-2 md:order-1">
               <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Our Foundation</h2>

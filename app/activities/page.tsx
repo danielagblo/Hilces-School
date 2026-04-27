@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Code, Music, Calculator, Award, Activity, Star, Trophy, Palette, ChevronRight } from "lucide-react";
+import SchoolDoodles from "@/components/SchoolDoodles";
 
 const activities = [
   {
@@ -44,6 +45,7 @@ export default function Activities() {
     <div className="pb-16">
       {/* Header */}
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
+        <SchoolDoodles />
         <div className="absolute inset-0">
           <Image src="/images/robotics_class.png" alt="Activities Background" fill className="object-cover opacity-20" priority />
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent"></div>
@@ -56,8 +58,9 @@ export default function Activities() {
         </p>
       </div>
 
-      <section className="py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-32 bg-white relative overflow-hidden">
+        <SchoolDoodles className="text-primary/5" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-24 items-center mb-32">
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
@@ -123,8 +126,9 @@ export default function Activities() {
       </section>
 
       {/* Showcases & Exhibitions */}
-      <section className="py-32 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-32 bg-slate-50 relative overflow-hidden">
+        <SchoolDoodles className="text-primary/5" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Celebrating Talent</h2>
             <h3 className="text-4xl font-heading font-bold text-primary mb-6">Showcases & Exhibitions</h3>
@@ -159,6 +163,7 @@ export default function Activities() {
 
       {/* Call to Action */}
       <section className="py-32 bg-primary relative overflow-hidden text-center">
+        <SchoolDoodles className="text-white/10" />
         <div className="absolute inset-0">
           <Image src="/images/hero_school.png" alt="CTA Background" fill className="object-cover opacity-10" />
         </div>
