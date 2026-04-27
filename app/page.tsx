@@ -19,7 +19,14 @@ import {
   Heart,
   Pencil,
   Paperclip,
-  Smile
+  Smile,
+  Waves,
+  Palette,
+  Baby,
+  Code,
+  Monitor,
+  ArrowRight,
+  Home as HomeIcon
 } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect, useCallback, useRef, useMemo } from "react";
@@ -213,7 +220,7 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/60 to-black/20"></div>
           </motion.div>
         </AnimatePresence>
-        
+
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
           <AnimatePresence mode="wait">
             <motion.div
@@ -228,24 +235,24 @@ export default function Home() {
                 <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
                 {slides[currentSlide].badge}
               </div>
-              
+
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-8 leading-[1.05] tracking-tight">
                 {slides[currentSlide].title.split(" ").slice(0, -2).join(" ")} <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200 italic pr-2">
                   {slides[currentSlide].title.split(" ").slice(-2).join(" ")}
                 </span>
               </h1>
-              
+
               <p className="text-lg md:text-xl text-white/90 mb-12 max-w-xl font-medium leading-relaxed border-l-4 border-gold pl-6">
                 {slides[currentSlide].subtitle}
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-5">
                 <Link href="/admissions" className="bg-gold hover:bg-gold/90 text-primary px-10 py-4 rounded-full font-bold transition-all transform hover:scale-105 flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(249,196,35,0.3)]">
                   Apply Today <ChevronRight size={20} strokeWidth={3} />
                 </Link>
-                <Link href="/about" className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 px-10 py-4 rounded-full font-bold transition-all flex items-center justify-center"> 
-                  Discover Our Story 
+                <Link href="/about" className="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/20 px-10 py-4 rounded-full font-bold transition-all flex items-center justify-center">
+                  Discover Our Story
                 </Link>
               </div>
             </motion.div>
@@ -263,18 +270,73 @@ export default function Home() {
 
           {/* Navigation Arrows */}
           <div className="flex gap-2 bg-black/30 backdrop-blur-md p-2 rounded-full border border-white/10">
-            <button onClick={prevSlide} className="w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"> 
-              <ChevronLeft size={24} /> 
+            <button onClick={prevSlide} className="w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+              <ChevronLeft size={24} />
             </button>
-            <button onClick={nextSlide} className="w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors"> 
-              <ChevronRight size={24} /> 
+            <button onClick={nextSlide} className="w-12 h-12 rounded-full flex items-center justify-center text-white hover:bg-white hover:text-primary transition-colors">
+              <ChevronRight size={24} />
             </button>
           </div>
         </div>
       </section>
 
+      {/* Welcome Section - Blooming Tulips Style */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <SchoolDoodles className="text-primary/5" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left: Image Grid */}
+            <div className="grid grid-cols-2 gap-4 relative">
+              <div className="absolute inset-0 bg-gold/5 -m-8 rounded-[4rem] -z-10"></div>
+              <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} className="relative h-48 md:h-64 rounded-tl-[4rem] rounded-br-[4rem] overflow-hidden shadow-lg border-4 border-white">
+                <Image src="/images/welcome_reading.png" alt="Reading" fill className="object-cover" />
+              </motion.div>
+              <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} className="relative h-48 md:h-64 rounded-tr-[4rem] rounded-bl-[4rem] overflow-hidden shadow-lg border-4 border-white">
+                <Image src="/images/welcome_robotics.png" alt="Robotics" fill className="object-cover" />
+              </motion.div>
+              <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }} className="relative h-48 md:h-64 rounded-tr-[4rem] rounded-bl-[4rem] overflow-hidden shadow-lg border-4 border-white">
+                <Image src="/images/welcome_swimming.png" alt="Swimming" fill className="object-cover" />
+              </motion.div>
+              <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }} className="relative h-48 md:h-64 rounded-tl-[4rem] rounded-br-[4rem] overflow-hidden shadow-lg border-4 border-white">
+                <Image src="/images/welcome_ict.png" alt="ICT" fill className="object-cover" />
+              </motion.div>
+            </div>
+
+            {/* Right: Content */}
+            <div className="max-w-xl">
+              <span className="text-xs font-black tracking-[0.3em] text-red-600 uppercase mb-4 block">Welcome to Hilces International School</span>
+              <h2 className="text-4xl md:text-6xl font-heading font-bold text-primary mb-6 leading-tight">Developing <span className="text-gold italic">Geniuses</span></h2>
+              <p className="text-slate-600 text-lg leading-relaxed mb-10 font-medium">
+                At Hilces International School, we are committed to nurturing well-rounded learners through a perfect hybrid of the British and GES Curriculums. Our dynamic environment is designed to foster academic excellence and personal growth.
+              </p>
+              
+              <div className="grid grid-cols-2 gap-8">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center text-primary shadow-sm">
+                    <Activity size={28} />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-red-600">20+</div>
+                    <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Activities</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 bg-slate-50 rounded-2xl flex items-center justify-center text-primary shadow-sm">
+                    <Users size={28} />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-red-600">30+</div>
+                    <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Expert Staff</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* WHY CHOOSE US - STABILIZED WHIMSICAL EDITION */}
-      <section className="py-48 bg-white relative overflow-hidden">
+      <section className="py-32 bg-white relative overflow-hidden">
         <SchoolDoodles className="text-gold/30" />
         {/* Animated Background Doodles - Fixed Hydration */}
         <div className="absolute inset-0 pointer-events-none">
@@ -377,8 +439,85 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Explore Our Facilities (Reference Style) */}
+      <section className="py-24 bg-white relative overflow-hidden">
+        <SchoolDoodles className="text-primary/5" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+          <div className="text-center mb-20">
+            {/* The 3 dots */}
+            <div className="flex justify-center gap-1.5 mb-6">
+              <div className="w-5 h-5 rounded-full bg-[#5d2b7e]"></div>
+              <div className="w-5 h-5 rounded-full bg-[#f9c423]"></div>
+              <div className="w-5 h-5 rounded-full bg-[#d71921]"></div>
+            </div>
+            <h2 className="text-3xl md:text-5xl font-heading font-medium text-slate-900 tracking-tight">
+              Explore Our Exceptional Facilities!
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {[
+              {
+                title: "Music & Arts Studio",
+                desc: "Renamed to highlight the actual creative space and instrumental equipment available for students.",
+                img: "/images/facility_multisensory.png",
+                icon: Music,
+                color: "bg-[#7ab829]",
+              },
+              {
+                title: "Science & Tech Lab",
+                desc: "Focusing on the well-equipped hub where discovery and hands-on experiments happen.",
+                img: "/images/science_lab.png",
+                icon: Microscope,
+                color: "bg-[#1ebcd3]",
+              },
+              {
+                title: "Modern Dormitories",
+                desc: "Highlighting the serene and secure physical living facilities for your boarding students.",
+                img: "/images/modern_dorm.png",
+                icon: HomeIcon,
+                color: "bg-[#5d2b7e]",
+              },
+              {
+                title: "Robotics & ICT Center",
+                desc: "Shifting the focus from the activity to the state-of-the-art facility designed for programming and digital exploration.",
+                img: "/images/robotics_class.png",
+                icon: Monitor,
+                color: "bg-[#ea4315]",
+                hasButton: true
+              }
+            ].map((facility, idx) => (
+              <div key={idx} className="relative h-[600px] rounded-[2.5rem] overflow-hidden group shadow-[0_10px_30px_rgba(0,0,0,0.1)] bg-white border border-slate-100">
+                <div className="absolute top-0 left-0 w-full h-[65%]">
+                  <Image src={facility.img} fill alt={facility.title} className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                </div>
+
+                {/* Colored bottom section with curve */}
+                <div className={`absolute bottom-0 w-full h-[50%] ${facility.color} rounded-t-[40%] px-6 pb-10 pt-16 flex flex-col justify-center text-center text-white transition-all duration-500 z-0`}>
+                  <h3 className="text-[22px] font-heading font-medium mb-3 relative z-20">{facility.title}</h3>
+                  <p className="text-[15px] font-medium leading-relaxed opacity-95 relative z-20">{facility.desc}</p>
+
+                  {facility.hasButton && (
+                    <Link href="/facilities" className="absolute bottom-6 right-6 z-30 w-12 h-12 rounded-full bg-[#d71921] flex items-center justify-center text-white hover:bg-red-700 hover:-translate-y-1 transition-all shadow-xl border-2 border-white">
+                      <ArrowRight size={20} className="-rotate-45" strokeWidth={3} />
+                    </Link>
+                  )}
+                </div>
+
+                {/* Floating Icon */}
+                <div className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85px] h-[85px] bg-white rounded-3xl flex items-center justify-center shadow-xl z-10 text-slate-900 transition-transform duration-300 group-hover:-translate-y-8">
+                  <facility.icon size={36} strokeWidth={1.5} />
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
       {/* Ultra-Compact Testimonials Section */}
-      <section className="py-12 bg-slate-50 relative overflow-hidden">
+      <section className="py-24 bg-white relative overflow-hidden">
         <SchoolDoodles className="text-primary/15" />
         <div className="absolute top-0 right-0 p-8 opacity-5 text-primary pointer-events-none">
           <Star size={100} />
@@ -464,7 +603,7 @@ export default function Home() {
       {/* Compact Mission Card Section */}
       <section className="py-12 bg-slate-50 relative z-20">
         <div className="max-w-5xl mx-auto px-4">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -472,9 +611,9 @@ export default function Home() {
           >
             {/* Decorative BG */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-            
+
             <span className="text-gold font-bold tracking-[0.4em] text-[10px] uppercase mb-4 block relative z-10">Our Mission</span>
-            
+
             <div className="relative z-10 max-w-3xl mx-auto">
               <span className="text-4xl text-gold/30 font-serif absolute -top-4 -left-6 leading-none">“</span>
               <p className="text-xl md:text-2xl lg:text-3xl font-heading font-medium italic text-white leading-relaxed">
@@ -490,7 +629,7 @@ export default function Home() {
       <section className="py-24 bg-primary relative overflow-hidden">
         <SchoolDoodles />
         <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
