@@ -21,6 +21,36 @@ export default function About() {
         </div>
       </div>
 
+      {/* Core Philosophy / Introduction */}
+      <section className="py-32 bg-slate-50 relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gold/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="text-gold mb-8 flex justify-center">
+              <Award size={60} strokeWidth={1.5} className="drop-shadow-lg" />
+            </div>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-primary mb-10 leading-[1.15] tracking-tight">
+              A school built on <span className="text-gold italic">Christ</span> the solid rock.
+            </h2>
+            <div className="w-20 h-1 bg-gold mx-auto rounded-full mb-10 shadow-[0_0_15px_rgba(249,196,35,0.4)]"></div>
+            <p className="text-2xl text-slate-600 font-medium leading-relaxed mb-8 px-4 border-l-4 border-r-4 border-gold/30">
+              We uphold love, hard work, determination, respect, team work and discipline.
+            </p>
+            <p className="text-xl text-slate-500 leading-relaxed font-medium max-w-2xl mx-auto">
+              We provide quality, practical and all round Education.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Mission & Vision */}
       <section className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
