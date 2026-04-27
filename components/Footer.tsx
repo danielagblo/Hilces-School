@@ -230,8 +230,8 @@ export default function Footer() {
           <ChildDoodle />
         </div>
 
-        {/* Playful Child Doodle (Girl) - Positioned for Mobile */}
-        <div className="absolute left-[70%] top-[42%] pointer-events-none -translate-x-1/2 -translate-y-1/2 scale-[0.6] md:scale-100">
+        {/* Playful Child Doodle (Girl) - Responsive Positioning */}
+        <div className="absolute left-[70%] md:left-[55%] top-[42%] md:top-[45%] pointer-events-none -translate-x-1/2 -translate-y-1/2 scale-[0.6] md:scale-100">
           <GirlDoodle />
         </div>
         
