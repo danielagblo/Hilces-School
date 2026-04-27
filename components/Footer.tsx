@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { MessageCircle, Phone, Mail, MapPin } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const ChildDoodle = () => (
   <svg viewBox="-40 -120 200 280" width="300" height="420" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white/20 rotate-[-5deg]">
@@ -222,6 +225,18 @@ const GirlDoodle = () => (
 );
 
 export default function Footer() {
+  const pathname = usePathname();
+  const [mounted, setMounted] = (require('react').useState)(false);
+
+  (require('react').useEffect)(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  const isAdminPage = pathname?.startsWith('/hilces-admin');
+  if (isAdminPage) return null;
+
   return (
     <>
       <footer className="bg-primary pt-20 pb-10 text-white/80 border-t border-white/10 relative overflow-hidden">

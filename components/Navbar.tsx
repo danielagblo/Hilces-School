@@ -10,6 +10,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const isAdminPage = pathname.startsWith('/hilces-admin');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,6 +32,8 @@ export default function Navbar() {
     { name: "Academics", path: "/academics" },
     { name: "Activities", path: "/activities" },
   ];
+
+  if (isAdminPage) return null;
 
   return (
     <>

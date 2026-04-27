@@ -21,7 +21,15 @@ export async function POST(request: Request) {
     await sendSMS(parentPhone, parentMessage);
     
     // Send SMS to School
-    const schoolMessage = `New Admission Alert! ${body.parentName} just applied for ${body.studentFirstName} (${body.gradeApplyingFor}). Contact: ${parentPhone}.`;
+    const schoolMessage = `NEW ADMISSION!
+Student: ${body.studentFirstName} ${body.studentLastName}
+Grade: ${body.gradeApplyingFor} (${body.residentialStatus})
+DOB: ${body.dateOfBirth}
+Gender: ${body.gender}
+Prev School: ${body.previousSchool || 'N/A'}
+Parent: ${body.parentName}
+Phone: ${body.parentPhone}
+Email: ${body.parentEmail || 'N/A'}`;
     await sendSMS(schoolPhone, schoolMessage);
     
     return NextResponse.json({ success: true, data: newEnrollment }, { status: 201 });

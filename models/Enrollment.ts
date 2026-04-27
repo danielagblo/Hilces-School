@@ -25,6 +25,7 @@ const EnrollmentSchema: Schema = new Schema({
   gradeApplyingFor: { type: String, required: true },
   residentialStatus: { type: String, required: true },
   previousSchool: { type: String },
+  status: { type: String, default: 'pending' },
   createdAt: { type: Date, default: Date.now },
 });
 

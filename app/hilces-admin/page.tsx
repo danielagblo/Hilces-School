@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Lock, Search, Users, Calendar, Phone, Mail, ChevronRight, School, RefreshCw } from "lucide-react";
+import { Lock, Search, Users, Calendar, Phone, Mail, ChevronRight, School, RefreshCw, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -17,6 +17,7 @@ type Applicant = {
   gradeApplyingFor: string;
   residentialStatus: string;
   previousSchool: string;
+  status: 'pending' | 'admitted';
   createdAt: string;
 };
 
@@ -25,9 +26,14 @@ export default function AdminPortal() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showRefreshed, setShowRefreshed] = useState(false);
   
   const [applicants, setApplicants] = useState<Applicant[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,10 +62,38 @@ export default function AdminPortal() {
     }
   };
 
+  const handleApprove = async (id: string) => {
+    if (!confirm("Are you sure you want to admit this student? An SMS will be sent to the parent immediately.")) return;
+    
+    setLoading(true);
+    try {
+      const response = await fetch('/api/admin/approve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, password }),
+      });
+      const result = await response.json();
+      if (response.ok && result.success) {
+        // Update local state
+        setApplicants(prev => prev.map(app => 
+          app._id === id ? { ...app, status: 'admitted' } : app
+        ));
+        setShowRefreshed(true);
+        setTimeout(() => setShowRefreshed(false), 2000);
+      } else {
+        alert(result.error || "Failed to approve");
+      }
+    } catch (err) {
+      console.error("Failed to approve", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const refreshData = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/admin/applicants', {
+      const response = await fetch('/api/admin/applicants?t=' + Date.now(), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password }),
@@ -67,6 +101,8 @@ export default function AdminPortal() {
       const result = await response.json();
       if (response.ok && result.success) {
         setApplicants(result.data);
+        setShowRefreshed(true);
+        setTimeout(() => setShowRefreshed(false), 2000);
       }
     } catch (err) {
       console.error("Failed to refresh", err);
@@ -78,6 +114,17 @@ export default function AdminPortal() {
   const filteredApplicants = applicants.filter(app => 
     `${app.studentFirstName} ${app.studentLastName} ${app.parentName} ${app.parentPhone}`.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredApplicants.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedApplicants = filteredApplicants.slice(startIndex, startIndex + itemsPerPage);
+
+  // Reset to page 1 when searching
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
+  };
 
   if (!isAuthenticated) {
     return (
@@ -127,9 +174,22 @@ export default function AdminPortal() {
             <h1 className="text-4xl font-heading font-bold mb-2">Enrollment Dashboard</h1>
             <p className="text-white/70 font-medium text-lg">Manage and review student applications</p>
           </div>
-          <div className="flex gap-4">
-             <button onClick={refreshData} className="bg-white/10 hover:bg-white/20 backdrop-blur-md p-3 rounded-xl transition-colors">
+          <div className="flex items-center gap-4">
+             <AnimatePresence>
+               {showRefreshed && (
+                 <motion.span 
+                   initial={{ opacity: 0, x: 20 }}
+                   animate={{ opacity: 1, x: 0 }}
+                   exit={{ opacity: 0, x: 20 }}
+                   className="bg-green-500/20 text-green-300 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest border border-green-500/30"
+                 >
+                   Data Refreshed!
+                 </motion.span>
+               )}
+             </AnimatePresence>
+             <button onClick={refreshData} className="bg-white/10 hover:bg-white/20 backdrop-blur-md p-3 rounded-xl transition-colors relative group">
                <RefreshCw size={24} className={loading ? "animate-spin" : ""} />
+               <span className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-white text-primary text-[10px] font-bold px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Refresh List</span>
              </button>
           </div>
         </div>
@@ -157,7 +217,7 @@ export default function AdminPortal() {
               <input 
                 type="text" 
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={handleSearchChange}
                 placeholder="Search by student, parent name, or phone..." 
                 className="w-full bg-transparent border-none focus:outline-none font-medium text-lg text-primary placeholder-slate-300"
               />
@@ -172,9 +232,9 @@ export default function AdminPortal() {
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-100">
                   <th className="p-6 text-xs font-bold text-slate-400 uppercase tracking-widest">Student</th>
-                  <th className="p-6 text-xs font-bold text-slate-400 uppercase tracking-widest">Grade / Status</th>
+                  <th className="p-6 text-xs font-bold text-slate-400 uppercase tracking-widest">Grade / Residential</th>
                   <th className="p-6 text-xs font-bold text-slate-400 uppercase tracking-widest">Parent Details</th>
-                  <th className="p-6 text-xs font-bold text-slate-400 uppercase tracking-widest">Date Applied</th>
+                  <th className="p-6 text-xs font-bold text-slate-400 uppercase tracking-widest text-right">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
@@ -185,7 +245,7 @@ export default function AdminPortal() {
                     </td>
                   </tr>
                 ) : (
-                  filteredApplicants.map((app) => (
+                  paginatedApplicants.map((app) => (
                     <tr key={app._id} className="hover:bg-slate-50/50 transition-colors">
                       <td className="p-6">
                         <div className="font-bold text-primary text-lg mb-1">{app.studentFirstName} {app.studentLastName}</div>
@@ -209,8 +269,23 @@ export default function AdminPortal() {
                           {app.parentEmail && <a href={`mailto:${app.parentEmail}`} className="flex items-center gap-1 hover:text-primary transition-colors"><Mail size={14} /> {app.parentEmail}</a>}
                         </div>
                       </td>
-                      <td className="p-6 text-slate-500 font-medium">
-                        {new Date(app.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' })}
+                      <td className="p-6 text-right">
+                        {app.status === 'admitted' ? (
+                          <div className="inline-flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-widest border border-green-100">
+                            <CheckCircle2 size={14} /> Admitted
+                          </div>
+                        ) : (
+                          <button 
+                            onClick={() => handleApprove(app._id)}
+                            disabled={loading}
+                            className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest transition-all hover:shadow-lg active:scale-95 disabled:opacity-50"
+                          >
+                            Admit
+                          </button>
+                        )}
+                        <div className="mt-2 text-[10px] text-slate-400 font-medium">
+                          {new Date(app.createdAt).toLocaleDateString()}
+                        </div>
                       </td>
                     </tr>
                   ))
@@ -218,6 +293,44 @@ export default function AdminPortal() {
               </tbody>
             </table>
           </div>
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="p-6 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+              <p className="text-sm font-medium text-slate-500">
+                Showing <span className="text-primary font-bold">{startIndex + 1}</span> to <span className="text-primary font-bold">{Math.min(startIndex + itemsPerPage, filteredApplicants.length)}</span> of <span className="text-primary font-bold">{filteredApplicants.length}</span> applicants
+              </p>
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-primary disabled:opacity-40 disabled:cursor-not-allowed hover:border-primary transition-colors shadow-sm"
+                >
+                  Previous
+                </button>
+                <div className="flex items-center gap-1">
+                   {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                     <button
+                       key={page}
+                       onClick={() => setCurrentPage(page)}
+                       className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${
+                         currentPage === page ? 'bg-primary text-white shadow-lg' : 'bg-white text-primary border border-slate-200 hover:border-primary'
+                       }`}
+                     >
+                       {page}
+                     </button>
+                   ))}
+                </div>
+                <button 
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-bold text-primary disabled:opacity-40 disabled:cursor-not-allowed hover:border-primary transition-colors shadow-sm"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
