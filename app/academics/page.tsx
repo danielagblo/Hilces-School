@@ -80,23 +80,34 @@ export default function Academics() {
                   { icon: BookOpen, title: "Activity-Based", color: "text-gold", bg: "bg-gold/10" },
                   { icon: CheckCircle2, title: "Practical Focus", color: "text-primary", bg: "bg-primary/5" }
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-4 bg-slate-50 p-6 rounded-3xl border border-slate-100 hover:shadow-xl hover:shadow-primary/5 transition-all">
+                  <motion.div 
+                    key={idx} 
+                    whileInView={{ boxShadow: ["0 0 0 rgba(0,0,0,0)", "0 20px 25px -5px rgba(10,77,162,0.1)", "0 0 0 rgba(0,0,0,0)"] }}
+                    viewport={{ once: false, margin: "-100px" }}
+                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 2 }}
+                    className={`flex items-center gap-4 bg-slate-50 p-6 rounded-3xl border border-slate-100 transition-all`}
+                  >
                     <div className={`w-12 h-12 ${item.bg} rounded-2xl flex items-center justify-center flex-shrink-0 shadow-sm`}>
                       <item.icon className={item.color} size={24} />
                     </div>
                     <span className="font-bold text-primary text-sm">{item.title}</span>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
             
-            <div className="relative h-[600px] rounded-[3rem] overflow-hidden shadow-2xl group image-shine">
+            <div className="relative h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden shadow-2xl group image-shine">
               <Image src="/images/science_lab.png" alt="Laboratory" fill className="object-cover transition-transform duration-1000 group-hover:scale-110" />
               <div className="absolute inset-0 bg-primary/20 group-hover:bg-primary/10 transition-colors"></div>
               <div className="absolute top-10 right-10">
-                <div className="bg-gold text-primary p-6 rounded-3xl shadow-2xl rotate-12 group-hover:rotate-0 transition-transform duration-500 font-heading font-bold">
+                <motion.div 
+                  whileInView={{ rotate: [12, 0, 12] }}
+                  viewport={{ once: false, margin: "-50px" }}
+                  transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
+                  className="bg-gold text-primary p-6 rounded-3xl shadow-2xl rotate-12 group-hover:rotate-0 transition-transform duration-500 font-heading font-bold"
+                >
                   Practical <br/>First
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -228,23 +239,31 @@ export default function Academics() {
           </div>
 
           {/* Lab Focus */}
-          <div className="bg-primary rounded-[4rem] overflow-hidden shadow-2xl flex flex-col md:flex-row items-stretch">
-            <div className="md:w-1/2 p-16 md:p-24 text-white flex flex-col justify-center">
-              <div className="w-20 h-20 bg-gold/20 rounded-3xl flex items-center justify-center mb-10">
-                <Microscope className="text-gold" size={44} />
-              </div>
-              <h3 className="text-4xl font-heading font-bold mb-8 leading-tight">Well-Equipped <br/>Laboratories</h3>
-              <p className="text-white/70 leading-relaxed text-lg font-medium mb-12">
+          <div className="bg-primary rounded-[3rem] md:rounded-[4rem] overflow-hidden shadow-2xl flex flex-col md:flex-row items-stretch">
+            {/* Image Section - Compact on Mobile */}
+            <div className="relative h-[250px] md:h-auto md:w-1/2 image-shine">
+              <Image src="/images/science_lab.png" alt="Science Laboratory" fill className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent md:bg-gradient-to-r md:from-primary/60"></div>
+            </div>
+
+            {/* Text Section - Tight Padding on Mobile */}
+            <div className="p-8 md:p-24 text-white md:w-1/2 flex flex-col justify-center">
+              <motion.div 
+                whileInView={{ scale: [1, 1.1, 1] }}
+                viewport={{ once: false, margin: "-50px" }}
+                transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 3 }}
+                className="w-14 h-14 md:w-20 md:h-20 bg-gold/20 rounded-2xl md:rounded-3xl flex items-center justify-center mb-6 md:mb-10 shadow-xl"
+              >
+                <Microscope className="text-gold md:w-[44px] md:h-[44px]" size={28} />
+              </motion.div>
+              <h3 className="text-2xl md:text-4xl font-heading font-bold mb-4 md:mb-8 leading-tight">Well-Equipped <br/>Laboratories</h3>
+              <p className="text-white/80 leading-relaxed text-base md:text-lg font-medium mb-8 md:mb-12">
                 Our commitment to practical education is reflected in our state-of-the-art science laboratories. 
               </p>
               <div className="flex items-center gap-4">
-                <div className="h-0.5 w-12 bg-gold"></div>
-                <span className="uppercase tracking-[0.3em] text-xs font-bold text-gold">Innovation Hub</span>
+                <div className="h-0.5 w-10 md:w-12 bg-gold"></div>
+                <span className="uppercase tracking-[0.3em] text-[10px] md:text-xs font-bold text-gold">Innovation Hub</span>
               </div>
-            </div>
-            <div className="md:w-1/2 relative h-[500px] md:h-auto image-shine">
-              <Image src="/images/science_lab.png" alt="Science Laboratory" fill className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-transparent md:block hidden"></div>
             </div>
           </div>
         </div>
@@ -279,13 +298,19 @@ export default function Academics() {
                   desc: "Dedicated meetings between parents and teachers to align on goals and celebrate achievements."
                 }
               ].map((item, idx) => (
-                <div key={idx} className="bg-white border-2 border-slate-50 p-10 rounded-3xl hover:border-gold/30 transition-colors group">
+                <motion.div 
+                  key={idx} 
+                  whileInView={{ borderColor: ["rgba(241,245,249,1)", "rgba(249,196,35,0.3)", "rgba(241,245,249,1)"] }}
+                  viewport={{ once: false, margin: "-100px" }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  className="bg-white border-2 border-slate-50 p-10 rounded-3xl transition-colors group"
+                >
                   <div className="w-16 h-16 bg-primary/5 rounded-2xl flex items-center justify-center mb-6 text-primary group-hover:bg-primary group-hover:text-gold transition-colors">
                     <CheckCircle2 size={32} />
                   </div>
                   <h4 className="text-2xl font-heading font-bold text-primary mb-4">{item.title}</h4>
                   <p className="text-slate-500 font-medium leading-relaxed">{item.desc}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>

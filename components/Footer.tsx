@@ -225,13 +225,13 @@ export default function Footer() {
   return (
     <>
       <footer className="bg-primary pt-20 pb-10 text-white/80 border-t border-white/10 relative overflow-hidden">
-        {/* Playful Child Doodle (Boy) */}
-        <div className="absolute right-0 top-0 pointer-events-none hidden md:block translate-x-[10%]">
+        {/* Playful Child Doodle (Boy) - Scaled for Mobile */}
+        <div className="absolute right-0 top-0 pointer-events-none translate-x-[20%] md:translate-x-[10%] scale-50 md:scale-100 origin-top-right">
           <ChildDoodle />
         </div>
 
-        {/* Playful Child Doodle (Girl) */}
-        <div className="absolute left-1/2 top-0 pointer-events-none hidden lg:block -translate-x-[40%] translate-y-[10%]">
+        {/* Playful Child Doodle (Girl) - Positioned for Mobile */}
+        <div className="absolute left-[70%] top-[42%] pointer-events-none -translate-x-1/2 -translate-y-1/2 scale-[0.6] md:scale-100">
           <GirlDoodle />
         </div>
         

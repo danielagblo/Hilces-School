@@ -22,8 +22,8 @@ export default function Navbar() {
   const isHome = pathname === "/";
   const navBg = isScrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5';
   const textColor = isScrolled ? 'text-slate-700' : 'text-white/90';
-  const logoTextColor = isScrolled ? 'text-primary' : 'text-white';
-  const menuBtnColor = isScrolled ? 'text-primary' : 'text-white';
+  const logoTextColor = (isScrolled || mobileMenuOpen) ? 'text-primary' : 'text-white';
+  const menuBtnColor = (isScrolled || mobileMenuOpen) ? 'text-primary' : 'text-white';
 
   const navLinks = [
     { name: "Home", path: "/" },

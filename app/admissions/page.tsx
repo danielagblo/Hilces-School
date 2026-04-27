@@ -55,9 +55,14 @@ export default function Admissions() {
             ].map((item, idx) => (
               <div key={idx} className="bg-slate-50 p-12 rounded-[3rem] border border-slate-100 relative group hover:shadow-2xl transition-all">
                 <div className="absolute top-10 right-10 text-6xl font-heading font-bold text-slate-200 group-hover:text-gold/20 transition-colors">{item.step}</div>
-                <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center text-white mb-8 shadow-xl group-hover:scale-110 transition-transform">
+                <motion.div 
+                  whileInView={{ scale: [1, 1.1, 1] }}
+                  viewport={{ once: false, margin: "-100px" }}
+                  transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 2 }}
+                  className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center text-white mb-8 shadow-xl group-hover:scale-110 transition-transform"
+                >
                   <item.icon size={32} />
-                </div>
+                </motion.div>
                 <h4 className="text-2xl font-heading font-bold text-primary mb-4 relative z-10">{item.title}</h4>
                 <p className="text-slate-500 font-medium leading-relaxed relative z-10">{item.desc}</p>
               </div>
@@ -84,66 +89,77 @@ export default function Admissions() {
         </div>
       </section>
 
-      {/* Location & Inquiry (Map Section) */}
-      <section className="py-32 bg-white relative overflow-hidden">
+      {/* Balanced Location & Inquiry Section */}
+      <section className="py-20 bg-white relative overflow-hidden">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              {/* Left: Contact Info */}
-              <div>
-                <h2 className="text-xs font-bold tracking-[0.3em] text-gold uppercase mb-4">Visit Us</h2>
-                <h3 className="text-4xl md:text-5xl font-heading font-bold text-primary mb-8 leading-tight">Inquiry & Location</h3>
-                <p className="text-slate-500 text-lg leading-relaxed mb-12 font-medium">
-                  Our doors are always open for prospective parents. Use the map to locate our campus, or reach out directly to schedule an appointment.
-                </p>
-                
-                <div className="space-y-8">
-                  <div className="flex items-center gap-6 group">
-                    <div className="w-16 h-16 bg-slate-50 rounded-3xl flex items-center justify-center shadow-inner group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                      <Phone className="text-primary group-hover:text-white transition-colors" size={28} />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Call Us</p>
-                      <a href="tel:0247704801" className="text-2xl font-bold text-primary hover:text-gold transition-colors">0247704801</a>
-                    </div>
-                  </div>
+            <div className="text-center mb-12">
+               <h3 className="text-2xl font-heading font-bold text-primary">Inquiry & Visit</h3>
+               <div className="w-12 h-1 bg-gold mx-auto rounded-full mt-3"></div>
+            </div>
 
-                  <div className="flex items-center gap-6 group">
-                    <div className="w-16 h-16 bg-slate-50 rounded-3xl flex items-center justify-center shadow-inner group-hover:bg-[#25D366] group-hover:text-white transition-all duration-500">
-                      <MessageCircle className="text-[#25D366] group-hover:text-white transition-colors" size={28} />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">WhatsApp</p>
-                      <a href="https://wa.me/233247704801" target="_blank" rel="noopener noreferrer" className="text-2xl font-bold text-primary hover:text-[#25D366] transition-colors">Admission Chat</a>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center gap-6 group">
-                    <div className="w-16 h-16 bg-slate-50 rounded-3xl flex items-center justify-center shadow-inner group-hover:bg-gold group-hover:text-white transition-all duration-500">
-                      <MapPin className="text-primary group-hover:text-white transition-colors" size={28} />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Campus Location</p>
-                      <p className="text-lg font-bold text-primary">Hilces International School, Ghana</p>
-                    </div>
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="flex items-center gap-5 p-6 bg-slate-50 rounded-3xl border border-slate-100 group hover:bg-white hover:shadow-xl transition-all duration-500">
+                <motion.div 
+                  whileInView={{ backgroundColor: ["rgba(255,255,255,1)", "rgba(10,77,162,1)", "rgba(255,255,255,1)"], color: ["rgba(10,77,162,1)", "rgba(255,255,255,1)", "rgba(10,77,162,1)"] }}
+                  viewport={{ once: false, margin: "-100px" }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-primary transition-all duration-500"
+                >
+                  <Phone size={24} />
+                </motion.div>
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Call Us</p>
+                  <a href="tel:0247704801" className="text-xl font-bold text-primary hover:text-gold transition-colors">0247704801</a>
                 </div>
               </div>
 
-              {/* Right: Map */}
-              <div className="relative h-[600px] rounded-[3rem] overflow-hidden shadow-2xl border-4 border-slate-50">
-                 <iframe 
-                    src="https://maps.google.com/maps?q=Hilces%20International%20School%20Ghana&t=&z=14&ie=UTF8&iwloc=&output=embed" 
-                    width="100%" 
-                    height="100%" 
-                    style={{ border: 0 }} 
-                    allowFullScreen={true} 
-                    loading="lazy" 
-                    referrerPolicy="no-referrer-when-downgrade"
-                 ></iframe>
+              <div className="flex items-center gap-5 p-6 bg-slate-50 rounded-3xl border border-slate-100 group hover:bg-white hover:shadow-xl transition-all duration-500">
+                <motion.div 
+                  whileInView={{ backgroundColor: ["rgba(255,255,255,1)", "rgba(37,211,102,1)", "rgba(255,255,255,1)"], color: ["rgba(37,211,102,1)", "rgba(255,255,255,1)", "rgba(37,211,102,1)"] }}
+                  viewport={{ once: false, margin: "-100px" }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-[#25D366] transition-all duration-500"
+                >
+                  <MessageCircle size={24} />
+                </motion.div>
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">WhatsApp</p>
+                  <a href="https://wa.me/233247704801" target="_blank" rel="noopener noreferrer" className="text-xl font-bold text-primary hover:text-[#25D366] transition-colors">Admission Chat</a>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-5 p-6 bg-slate-50 rounded-3xl border border-slate-100 group hover:bg-white hover:shadow-xl transition-all duration-500">
+                <motion.div 
+                  whileInView={{ backgroundColor: ["rgba(255,255,255,1)", "rgba(249,196,35,1)", "rgba(255,255,255,1)"], color: ["rgba(10,77,162,1)", "rgba(255,255,255,1)", "rgba(10,77,162,1)"] }}
+                  viewport={{ once: false, margin: "-100px" }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-gold transition-all duration-500"
+                >
+                  <MapPin size={24} />
+                </motion.div>
+                <div>
+                  <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Campus Location</p>
+                  <p className="text-xl font-bold text-primary">Hilces School, Ghana</p>
+                </div>
               </div>
             </div>
          </div>
       </section>
+
+      {/* Full Width Map */}
+      <section className="h-[500px] w-full relative overflow-hidden bg-slate-100">
+         <iframe 
+            src="https://maps.google.com/maps?q=Hilces%20International%20School%20Ghana&t=&z=14&ie=UTF8&iwloc=&output=embed" 
+            width="100%" 
+            height="100%" 
+            style={{ border: 0 }} 
+            allowFullScreen={true} 
+            loading="lazy" 
+            referrerPolicy="no-referrer-when-downgrade"
+            className="filter grayscale-[20%] contrast-[110%]"
+         ></iframe>
+      </section>
+
 
 
     </div>

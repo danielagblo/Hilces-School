@@ -84,7 +84,7 @@ export default function Activities() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative h-[600px] rounded-[3rem] overflow-hidden shadow-2xl group image-shine"
+              className="relative h-[400px] md:h-[600px] rounded-[3rem] overflow-hidden shadow-2xl group image-shine"
             >
               <Image 
                 src="/images/robotics_class.png" 
@@ -111,9 +111,14 @@ export default function Activities() {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white p-12 rounded-[3rem] border border-slate-100 hover:shadow-2xl hover:shadow-primary/5 transition-all group flex flex-col items-center text-center"
               >
-                <div className={`w-20 h-20 ${activity.color} rounded-3xl flex items-center justify-center mb-10 text-white shadow-2xl transform group-hover:rotate-6 transition-transform`}>
+                <motion.div 
+                  whileInView={{ rotate: [0, 6, 0] }}
+                  viewport={{ once: false, margin: "-100px" }}
+                  transition={{ duration: 1, repeat: Infinity, repeatDelay: 2 }}
+                  className={`w-20 h-20 ${activity.color} rounded-3xl flex items-center justify-center mb-10 text-white shadow-2xl transform group-hover:rotate-6 transition-transform`}
+                >
                   <activity.icon size={36} />
-                </div>
+                </motion.div>
                 <h3 className="text-2xl font-heading font-bold text-primary mb-6">{activity.title}</h3>
                 <p className="text-slate-500 leading-relaxed font-medium mb-8">{activity.description}</p>
                 <div className="mt-auto flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gold opacity-0 group-hover:opacity-100 transition-opacity">
@@ -138,24 +143,34 @@ export default function Activities() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-10">
-            <div className="bg-white p-12 rounded-[3rem] border border-slate-100 flex gap-8 items-start group hover:shadow-xl transition-all">
-              <div className="w-16 h-16 bg-gold/10 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-gold group-hover:text-primary transition-colors text-gold">
-                <Trophy size={32} />
+            <div className="bg-white p-10 md:p-12 rounded-[3rem] border border-slate-100 group hover:shadow-xl transition-all">
+              <div className="flex items-center gap-6 mb-6">
+                <motion.div 
+                  whileInView={{ backgroundColor: ["rgba(249,196,35,0.1)", "rgba(249,196,35,1)", "rgba(249,196,35,0.1)"] }}
+                  viewport={{ once: false, margin: "-100px" }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  className="w-16 h-16 bg-gold/10 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-gold transition-colors text-gold group-hover:text-primary"
+                >
+                  <Trophy size={32} />
+                </motion.div>
+                <h4 className="text-2xl font-heading font-bold text-primary">Inter-School Competitions</h4>
               </div>
-              <div>
-                <h4 className="text-2xl font-heading font-bold text-primary mb-3">Inter-School Competitions</h4>
-                <p className="text-slate-500 leading-relaxed font-medium">From Robotics tournaments to spelling bees, our students frequently compete and bring home gold, building their resilience and competitive spirit.</p>
-              </div>
+              <p className="text-slate-500 leading-relaxed font-medium">From Robotics tournaments to spelling bees, our students frequently compete and bring home gold, building their resilience and competitive spirit.</p>
             </div>
             
-            <div className="bg-white p-12 rounded-[3rem] border border-slate-100 flex gap-8 items-start group hover:shadow-xl transition-all">
-              <div className="w-16 h-16 bg-primary/5 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-gold transition-colors text-primary">
-                <Palette size={32} />
+            <div className="bg-white p-10 md:p-12 rounded-[3rem] border border-slate-100 group hover:shadow-xl transition-all">
+              <div className="flex items-center gap-6 mb-6">
+                <motion.div 
+                  whileInView={{ backgroundColor: ["rgba(10,77,162,0.05)", "rgba(10,77,162,1)", "rgba(10,77,162,0.05)"] }}
+                  viewport={{ once: false, margin: "-100px" }}
+                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                  className="w-16 h-16 bg-primary/5 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary transition-colors text-primary group-hover:text-gold"
+                >
+                  <Palette size={32} />
+                </motion.div>
+                <h4 className="text-2xl font-heading font-bold text-primary">Termly Creative Arts Fair</h4>
               </div>
-              <div>
-                <h4 className="text-2xl font-heading font-bold text-primary mb-3">Termly Creative Arts Fair</h4>
-                <p className="text-slate-500 leading-relaxed font-medium">A grand exhibition at the end of every term where parents are invited to watch ballet recitals, music performances, and view art projects.</p>
-              </div>
+              <p className="text-slate-500 leading-relaxed font-medium">A grand exhibition at the end of every term where parents are invited to watch ballet recitals, music performances, and view art projects.</p>
             </div>
           </div>
         </div>

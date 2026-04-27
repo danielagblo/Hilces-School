@@ -70,17 +70,22 @@ export default function About() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  className="flex gap-8 group"
+                  className="group"
                 >
-                  <div className="w-20 h-20 rounded-3xl bg-primary/5 flex items-center justify-center flex-shrink-0 shadow-sm border border-primary/10 group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                    <Target className="text-primary group-hover:text-white transition-colors" size={36} />
+                  <div className="flex items-center gap-6 mb-4">
+                    <motion.div 
+                      whileInView={{ backgroundColor: ["rgba(10,77,162,0.05)", "rgba(10,77,162,1)", "rgba(10,77,162,0.05)"] }}
+                      viewport={{ once: false, margin: "-100px" }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                      className="w-16 h-16 rounded-3xl bg-primary/5 flex items-center justify-center flex-shrink-0 shadow-sm border border-primary/10 group-hover:bg-primary transition-all duration-500"
+                    >
+                      <Target className="text-primary group-hover:text-white transition-colors" size={28} />
+                    </motion.div>
+                    <h4 className="text-2xl font-heading font-bold text-primary">Our Mission</h4>
                   </div>
-                  <div>
-                    <h4 className="text-2xl font-heading font-bold text-primary mb-3">Our Mission</h4>
-                    <p className="text-slate-500 leading-relaxed text-lg font-medium">
-                      To provide an enabling and thriving environment, and to produce well-mannered and responsible future leaders.
-                    </p>
-                  </div>
+                  <p className="text-slate-500 leading-relaxed text-lg font-medium">
+                    To provide an enabling and thriving environment, and to produce well-mannered and responsible future leaders.
+                  </p>
                 </motion.div>
 
                 <motion.div 
@@ -88,17 +93,22 @@ export default function About() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
-                  className="flex gap-8 group"
+                  className="group"
                 >
-                  <div className="w-20 h-20 rounded-3xl bg-gold/10 flex items-center justify-center flex-shrink-0 shadow-sm border border-gold/20 group-hover:bg-gold group-hover:text-white transition-all duration-500">
-                    <Compass className="text-gold group-hover:text-white transition-colors" size={36} />
+                  <div className="flex items-center gap-6 mb-4">
+                    <motion.div 
+                      whileInView={{ backgroundColor: ["rgba(249,196,35,0.1)", "rgba(249,196,35,1)", "rgba(249,196,35,0.1)"] }}
+                      viewport={{ once: false, margin: "-100px" }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                      className="w-16 h-16 rounded-3xl bg-gold/10 flex items-center justify-center flex-shrink-0 shadow-sm border border-gold/20 group-hover:bg-gold transition-all duration-500"
+                    >
+                      <Compass className="text-gold group-hover:text-white transition-colors" size={28} />
+                    </motion.div>
+                    <h4 className="text-2xl font-heading font-bold text-primary">Our Vision</h4>
                   </div>
-                  <div>
-                    <h4 className="text-2xl font-heading font-bold text-primary mb-3">Our Vision</h4>
-                    <p className="text-slate-500 leading-relaxed text-lg font-medium">
-                      To be the leading providers of quality, practical and holistic education in an atmosphere of love and respect for global impact.
-                    </p>
-                  </div>
+                  <p className="text-slate-500 leading-relaxed text-lg font-medium">
+                    To be the leading providers of quality, practical and holistic education in an atmosphere of love and respect for global impact.
+                  </p>
                 </motion.div>
               </div>
             </div>
@@ -107,7 +117,7 @@ export default function About() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="relative h-[700px] rounded-[3rem] overflow-hidden shadow-2xl order-1 md:order-2 image-shine"
+              className="relative h-[450px] md:h-[700px] rounded-[3rem] overflow-hidden shadow-2xl order-1 md:order-2 image-shine"
             >
               <Image 
                 src="/images/science_lab.png" 
@@ -115,11 +125,11 @@ export default function About() {
                 fill 
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 p-12">
-                <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-8 border border-white/20 text-white shadow-2xl">
-                  <p className="font-heading font-bold text-3xl mb-2">Quality First</p>
-                  <p className="text-white/80 font-medium">Holistic Education for a Global Impact</p>
+              <div className="absolute inset-0 bg-gradient-to-b from-primary/60 via-transparent to-transparent md:bg-gradient-to-t md:from-primary/60 md:to-transparent"></div>
+              <div className="absolute top-0 md:top-auto md:bottom-0 left-0 p-6 md:p-12 w-full md:w-auto">
+                <div className="bg-white/10 backdrop-blur-xl rounded-2xl md:rounded-3xl p-6 md:p-8 border border-white/20 text-white shadow-2xl">
+                  <p className="font-heading font-bold text-2xl md:text-3xl mb-1 md:mb-2">Quality First</p>
+                  <p className="text-white/80 font-medium text-sm md:text-base">Holistic Education for a Global Impact</p>
                 </div>
               </div>
             </motion.div>

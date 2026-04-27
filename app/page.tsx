@@ -99,7 +99,13 @@ function WhimsicalBubble({ feature, idx }: { feature: any, idx: number }) {
             scale: 1.05,
             transition: { duration: 0.15, ease: [0.23, 1, 0.32, 1] }
           }}
+          whileInView={{
+            scale: [1, 1.02, 1],
+            transition: { duration: 0.5, delay: 0.2 }
+          }}
+          viewport={{ once: false, margin: "-100px" }}
           className="relative w-64 h-64 md:w-80 md:h-80 rounded-[3.5rem] overflow-hidden shadow-[0_15px_40px_rgba(10,77,162,0.12)] border-[3px] border-white group-hover:border-gold transition-colors duration-150 isolate bg-slate-900"
+
           style={{ transform: "translate3d(0,0,0)", backfaceVisibility: "hidden" }}
         >
           <Image
@@ -190,12 +196,13 @@ export default function Home() {
             className="absolute inset-0"
           >
             <Image src={slides[currentSlide].image} alt={slides[currentSlide].title} fill sizes="100vw" className="object-cover" priority />
-            {/* Cinematic Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/60 to-black/20"></div>
+            {/* Cinematic Gradient Overlay - Dynamic for Mobile */}
+            <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/60 to-black/20 md:block hidden"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/40 to-primary/95 md:hidden block"></div>
           </motion.div>
         </AnimatePresence>
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 md:pt-20">
           <AnimatePresence mode="wait">
             <motion.div
               key={currentSlide}
@@ -206,11 +213,11 @@ export default function Home() {
               className="max-w-3xl"
             >
               <div className="inline-flex items-center gap-3 py-1.5 px-4 rounded-full bg-white/10 border border-white/20 text-gold font-bold text-[10px] uppercase tracking-widest mb-8 backdrop-blur-md">
-                <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
+                <span className="w-2 h-2 rounded-full bg-gold animate-pulse"></span>
                 {slides[currentSlide].badge}
               </div>
 
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-8 leading-[1.05] tracking-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-heading font-bold text-white mb-8 leading-[1.05] tracking-tight">
                 {slides[currentSlide].title.split(" ").slice(0, -2).join(" ")} <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold to-yellow-200 italic pr-2">
                   {slides[currentSlide].title.split(" ").slice(-2).join(" ")}
@@ -234,7 +241,7 @@ export default function Home() {
         </div>
 
         {/* Modern Bottom Controls */}
-        <div className="absolute bottom-10 right-4 md:right-10 z-20 flex flex-col md:flex-row items-end md:items-center gap-8">
+        <div className="absolute bottom-6 md:bottom-10 right-4 md:right-10 z-20 flex flex-col md:flex-row items-end md:items-center gap-6 md:gap-8">
           {/* Slide Indicators */}
           <div className="flex gap-3">
             {slides.map((_, idx) => (
@@ -259,26 +266,26 @@ export default function Home() {
         <SchoolDoodles className="text-primary/5" />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left: Image Grid */}
-            <div className="grid grid-cols-2 gap-4 relative">
+            {/* Left: Image Grid - Stack on Mobile */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 relative">
               <div className="absolute inset-0 bg-gold/5 -m-8 rounded-[4rem] -z-10"></div>
-              <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} className="relative h-48 md:h-64 rounded-tl-[4rem] rounded-br-[4rem] overflow-hidden shadow-lg border-4 border-white">
+              <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} className="relative h-64 sm:h-48 md:h-64 rounded-tl-[4rem] rounded-br-[4rem] overflow-hidden shadow-lg border-4 border-white">
                 <Image src="/images/welcome_reading.png" alt="Reading" fill className="object-cover" />
               </motion.div>
-              <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} className="relative h-48 md:h-64 rounded-tr-[4rem] rounded-bl-[4rem] overflow-hidden shadow-lg border-4 border-white">
+              <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.1 }} className="relative h-64 sm:h-48 md:h-64 rounded-tr-[4rem] rounded-bl-[4rem] overflow-hidden shadow-lg border-4 border-white">
                 <Image src="/images/welcome_robotics.png" alt="Robotics" fill className="object-cover" />
               </motion.div>
-              <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }} className="relative h-48 md:h-64 rounded-tr-[4rem] rounded-bl-[4rem] overflow-hidden shadow-lg border-4 border-white">
-                <Image src="/images/welcome_swimming.png" alt="Swimming" fill className="object-cover" />
+              <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }} className="relative h-64 sm:h-48 md:h-64 rounded-tr-[4rem] rounded-bl-[4rem] overflow-hidden shadow-lg border-4 border-white">
+                <Image src="/images/science_lab.png" alt="Science Lab" fill className="object-cover" />
               </motion.div>
-              <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }} className="relative h-48 md:h-64 rounded-tl-[4rem] rounded-br-[4rem] overflow-hidden shadow-lg border-4 border-white">
+              <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: 0.3 }} className="relative h-64 sm:h-48 md:h-64 rounded-tl-[4rem] rounded-br-[4rem] overflow-hidden shadow-lg border-4 border-white">
                 <Image src="/images/welcome_ict.png" alt="ICT" fill className="object-cover" />
               </motion.div>
             </div>
 
             {/* Right: Content */}
             <div className="max-w-xl">
-              <span className="text-xs font-black tracking-[0.3em] text-red-600 uppercase mb-4 block">Welcome to Hilces International School</span>
+              <span className="text-xs font-black tracking-[0.3em] text-gold uppercase mb-4 block">Welcome to Hilces International School</span>
               <h2 className="text-4xl md:text-6xl font-heading font-bold text-primary mb-6 leading-tight">Developing <span className="text-gold italic">Geniuses</span></h2>
               <p className="text-slate-600 text-lg leading-relaxed mb-10 font-medium">
                 At Hilces International School, we are committed to nurturing well-rounded learners through a perfect hybrid of the British and GES Curriculums. Our dynamic environment is designed to foster academic excellence and personal growth.
@@ -290,7 +297,7 @@ export default function Home() {
                     <Activity size={28} />
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-red-600">20+</div>
+                    <div className="text-2xl font-bold text-primary">20+</div>
                     <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Activities</div>
                   </div>
                 </div>
@@ -299,7 +306,7 @@ export default function Home() {
                     <Users size={28} />
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-red-600">30+</div>
+                    <div className="text-2xl font-bold text-primary">30+</div>
                     <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Expert Staff</div>
                   </div>
                 </div>
@@ -462,28 +469,40 @@ export default function Home() {
                 hasButton: true
               }
             ].map((facility, idx) => (
-              <div key={idx} className="relative h-[600px] rounded-[2.5rem] overflow-hidden group shadow-[0_10px_30px_rgba(0,0,0,0.1)] bg-white border border-slate-100">
+              <motion.div 
+                key={idx} 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                className="relative h-[550px] md:h-[600px] rounded-[2.5rem] overflow-hidden group shadow-[0_10px_30px_rgba(0,0,0,0.1)] bg-white border border-slate-100"
+              >
                 <div className="absolute top-0 left-0 w-full h-[65%]">
-                  <Image src={facility.img} fill alt={facility.title} className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <Image src={facility.img} fill alt={facility.title} className="object-cover transition-transform duration-700 md:group-hover:scale-105" />
                 </div>
 
                 {/* Colored bottom section with curve */}
-                <div className={`absolute bottom-0 w-full h-[50%] ${facility.color} rounded-t-[40%] px-6 pb-10 pt-16 flex flex-col justify-center text-center text-white transition-all duration-500 z-0`}>
+                <div className={`absolute bottom-0 w-full h-[50%] ${facility.color} rounded-t-[30%] md:rounded-t-[40%] px-6 pb-10 pt-12 md:pt-16 flex flex-col justify-center text-center text-white transition-all duration-500 z-0`}>
                   <h3 className="text-[22px] font-heading font-medium mb-3 relative z-20">{facility.title}</h3>
                   <p className="text-[15px] font-medium leading-relaxed opacity-95 relative z-20">{facility.desc}</p>
 
                   {facility.hasButton && (
-                    <Link href="/facilities" className="absolute bottom-6 right-6 z-30 w-12 h-12 rounded-full bg-[#d71921] flex items-center justify-center text-white hover:bg-red-700 hover:-translate-y-1 transition-all shadow-xl border-2 border-white">
+                    <Link href="/facilities" className="absolute bottom-6 right-6 z-30 w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white hover:bg-primary/90 hover:-translate-y-1 transition-all shadow-xl border-2 border-white">
                       <ArrowRight size={20} className="-rotate-45" strokeWidth={3} />
                     </Link>
                   )}
                 </div>
 
-                {/* Floating Icon */}
-                <div className="absolute top-[48%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[85px] h-[85px] bg-white rounded-3xl flex items-center justify-center shadow-xl z-10 text-slate-900 transition-transform duration-300 group-hover:-translate-y-8">
-                  <facility.icon size={36} strokeWidth={1.5} />
-                </div>
-              </div>
+                {/* Floating Icon - Reactive to Scroll on Mobile */}
+                <motion.div 
+                  initial={{ y: "0%", x: "-50%" }}
+                  whileInView={{ y: ["0%", "-20%", "0%"], x: "-50%" }}
+                  viewport={{ once: false, margin: "-100px" }}
+                  transition={{ duration: 1.2, repeat: Infinity, repeatDelay: 2 }}
+                  className="absolute top-[48%] left-1/2 w-16 h-16 md:w-[85px] md:h-[85px] bg-white rounded-2xl md:rounded-3xl flex items-center justify-center shadow-xl z-10 text-slate-900 transition-transform duration-300 md:group-hover:-translate-y-8"
+                >
+                  <facility.icon size={28} className="md:w-9 md:h-9" strokeWidth={1.5} />
+                </motion.div>
+              </motion.div>
             ))}
           </div>
 
@@ -502,7 +521,7 @@ export default function Home() {
             {/* Left Column: Header + Bubble */}
             <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-start">
               <div className="mb-6 text-center lg:text-left">
-                <h2 className="text-[10px] font-bold tracking-[0.3em] text-red-600 uppercase mb-1">Testimonials</h2>
+                <h2 className="text-[10px] font-bold tracking-[0.3em] text-gold uppercase mb-1">Testimonials</h2>
                 <h3 className="text-3xl md:text-4xl font-heading font-bold text-primary tracking-tight">Parents Reviews</h3>
               </div>
 
@@ -519,9 +538,9 @@ export default function Home() {
                       transform: "translateZ(0)"
                     }}
                   >
-                    {/* The Red Quote Circle from Reference */}
+                    {/* The Quote Circle */}
                     <div className="absolute top-10 -right-4 md:-right-8">
-                      <div className="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-xl text-white transform hover:scale-110 transition-transform">
+                      <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center shadow-xl text-white transform hover:scale-110 transition-transform">
                         <span className="text-3xl font-serif leading-none mt-2">“</span>
                       </div>
                     </div>
@@ -551,7 +570,7 @@ export default function Home() {
                     <button
                       key={i}
                       onClick={() => setCurrentSlide(i)}
-                      className={`h-3 rounded-full transition-all duration-300 ${(currentSlide % 3) === i ? 'w-10 bg-red-600' : 'w-3 bg-slate-300'}`}
+                      className={`h-3 rounded-full transition-all duration-300 ${(currentSlide % 3) === i ? 'w-10 bg-primary' : 'w-3 bg-slate-300'}`}
                     />
                   ))}
                 </div>
