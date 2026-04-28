@@ -1,43 +1,57 @@
 import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import sharp from "sharp";
 
-const s3Client = new S3Client({
+export const s3Client = new S3Client({
   region: process.env.AWS_REGION || "us-east-1",
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
   },
-  // If using a custom endpoint like Railway/Cloudflare/DigitalOcean
   ...(process.env.AWS_ENDPOINT ? { endpoint: process.env.AWS_ENDPOINT } : {}),
-  forcePathStyle: true, // Often needed for custom S3 providers
+  forcePathStyle: true,
 });
 
 export async function uploadToS3(file: Buffer, fileName: string, contentType: string) {
   const bucketName = process.env.AWS_S3_BUCKET_NAME!;
   
+  // Optimize image with Sharp
+  const optimizedBuffer = await sharp(file)
+    .resize(1200, null, { withoutEnlargement: true })
+    .webp({ quality: 80 })
+    .toBuffer();
+
+  // Sanitize filename: remove spaces and special chars, and ensure it ends with .webp
+  const sanitizedBase = fileName
+    .replace(/\s+/g, "-")
+    .replace(/\.[^/.]+$/, "");
+  const webpFileName = `${sanitizedBase}.webp`;
+
   const command = new PutObjectCommand({
     Bucket: bucketName,
-    Key: fileName,
-    Body: file,
-    ContentType: contentType,
-    ACL: "public-read", // Ensures the uploaded file is publicly readable
+    Key: webpFileName,
+    Body: optimizedBuffer,
+    ContentType: "image/webp",
+    // We can still use public-read if we want, but proxying makes it unnecessary
+    ACL: "public-read",
   });
 
   await s3Client.send(command);
 
-  // Return the URL. If using a custom endpoint, construct it accordingly.
-  if (process.env.AWS_ENDPOINT) {
-    return `${process.env.AWS_ENDPOINT}/${bucketName}/${fileName}`;
-  }
-  
-  return `https://${bucketName}.s3.${process.env.AWS_REGION || "us-east-1"}.amazonaws.com/${fileName}`;
+  // Return the Proxy URL instead of the direct S3 URL
+  return `/api/images/${webpFileName}`;
 }
 
-export async function deleteFromS3(fileName: string) {
+export async function deleteFromS3(fileNameOrUrl: string) {
   const bucketName = process.env.AWS_S3_BUCKET_NAME!;
+  
+  // Extract key if it's a proxy URL (e.g., /api/images/dynamic/xyz.webp)
+  const key = fileNameOrUrl.startsWith('/api/images/') 
+    ? fileNameOrUrl.replace('/api/images/', '') 
+    : fileNameOrUrl;
   
   const command = new DeleteObjectCommand({
     Bucket: bucketName,
-    Key: fileName,
+    Key: key,
   });
 
   await s3Client.send(command);

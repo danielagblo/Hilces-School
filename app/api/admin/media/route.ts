@@ -67,14 +67,19 @@ export async function POST(request: Request) {
         return NextResponse.json({ success: false, error: 'Missing details' }, { status: 400 });
       }
 
+      // 1. Delete from S3
+      try {
+        await deleteFromS3(imageUrl);
+      } catch (err) {
+        console.warn('S3 delete failed (might be already gone):', err);
+      }
+
+      // 2. Update DB
       const updated = await DynamicImage.findOneAndUpdate(
         { sectionId },
         { $pull: { images: imageUrl } },
         { new: true }
       );
-
-      // If gallery is empty, we might want to keep the record or delete it.
-      // For now we just keep it but the array is smaller.
 
       return NextResponse.json({ success: true, data: updated });
     }
@@ -85,12 +90,33 @@ export async function POST(request: Request) {
         return NextResponse.json({ success: false, error: 'Missing sectionId' }, { status: 400 });
       }
 
-      // We might want to delete from S3 too, but for simplicity we'll just remove the DB record
-      // to "revert" to the static image. 
-      // If we want to be thorough, we'd store the S3 key in the DB.
+      // 1. Find the record to get all image URLs
+      const record = await DynamicImage.findOne({ sectionId });
+      if (record) {
+        // Delete main image
+        if (record.imageUrl) {
+          try {
+            await deleteFromS3(record.imageUrl);
+          } catch (err) {
+            console.warn('S3 delete failed for main image:', err);
+          }
+        }
+        // Delete all gallery images
+        if (record.images && record.images.length > 0) {
+          for (const imgUrl of record.images) {
+            try {
+              await deleteFromS3(imgUrl);
+            } catch (err) {
+              console.warn('S3 delete failed for gallery image:', err);
+            }
+          }
+        }
+      }
+
+      // 2. Remove from DB
       await DynamicImage.findOneAndDelete({ sectionId });
 
-      return NextResponse.json({ success: true, message: 'Reverted to default' });
+      return NextResponse.json({ success: true, message: 'Reverted to default and cleaned up S3' });
     }
 
     return NextResponse.json({ success: false, error: 'Invalid action' }, { status: 400 });
