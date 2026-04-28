@@ -74,9 +74,6 @@ export default function About() {
                 >
                   <div className="flex items-center gap-6 mb-4">
                     <motion.div 
-                      whileInView={{ backgroundColor: ["rgba(10,77,162,0.05)", "rgba(10,77,162,1)", "rgba(10,77,162,0.05)"] }}
-                      viewport={{ once: false, margin: "-100px" }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
                       className="w-16 h-16 rounded-3xl bg-primary/5 flex items-center justify-center flex-shrink-0 shadow-sm border border-primary/10 group-hover:bg-primary transition-all duration-500"
                     >
                       <Target className="text-primary group-hover:text-white transition-colors" size={28} />
@@ -97,9 +94,6 @@ export default function About() {
                 >
                   <div className="flex items-center gap-6 mb-4">
                     <motion.div 
-                      whileInView={{ backgroundColor: ["rgba(249,196,35,0.1)", "rgba(249,196,35,1)", "rgba(249,196,35,0.1)"] }}
-                      viewport={{ once: false, margin: "-100px" }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
                       className="w-16 h-16 rounded-3xl bg-gold/10 flex items-center justify-center flex-shrink-0 shadow-sm border border-gold/20 group-hover:bg-gold transition-all duration-500"
                     >
                       <Compass className="text-gold group-hover:text-white transition-colors" size={28} />
