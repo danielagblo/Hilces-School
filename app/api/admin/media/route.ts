@@ -25,6 +25,7 @@ export async function POST(request: Request) {
     if (action === 'upload') {
       const sectionId = formData.get('sectionId') as string;
       const file = formData.get('file') as File;
+      const isMultiple = formData.get('isMultiple') === 'true';
 
       if (!sectionId || !file) {
         return NextResponse.json({ success: false, error: 'Missing sectionId or file' }, { status: 400 });
@@ -37,13 +38,45 @@ export async function POST(request: Request) {
       const imageUrl = await uploadToS3(buffer, fileName, contentType);
 
       // Update or create the record
-      const updatedImage = await DynamicImage.findOneAndUpdate(
-        { sectionId },
-        { imageUrl, updatedAt: new Date() },
-        { upsert: true, new: true }
-      );
+      let updatedImage;
+      if (isMultiple) {
+        updatedImage = await DynamicImage.findOneAndUpdate(
+          { sectionId },
+          { 
+            $push: { images: imageUrl }, 
+            $set: { updatedAt: new Date(), imageUrl: imageUrl } // Also set main imageUrl for safety
+          },
+          { upsert: true, new: true }
+        );
+      } else {
+        updatedImage = await DynamicImage.findOneAndUpdate(
+          { sectionId },
+          { imageUrl, updatedAt: new Date(), images: [] }, // Reset images if not multiple
+          { upsert: true, new: true }
+        );
+      }
 
       return NextResponse.json({ success: true, data: updatedImage });
+    }
+
+    if (action === 'remove_image') {
+      const sectionId = formData.get('sectionId') as string;
+      const imageUrl = formData.get('imageUrl') as string;
+
+      if (!sectionId || !imageUrl) {
+        return NextResponse.json({ success: false, error: 'Missing details' }, { status: 400 });
+      }
+
+      const updated = await DynamicImage.findOneAndUpdate(
+        { sectionId },
+        { $pull: { images: imageUrl } },
+        { new: true }
+      );
+
+      // If gallery is empty, we might want to keep the record or delete it.
+      // For now we just keep it but the array is smaller.
+
+      return NextResponse.json({ success: true, data: updated });
     }
 
     if (action === 'delete') {

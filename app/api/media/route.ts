@@ -9,9 +9,12 @@ export async function GET() {
     await dbConnect();
     const images = await DynamicImage.find({});
     
-    // Convert to a simple key-value map for easier lookup
+    // Convert to a map for easier lookup
     const imageMap = images.reduce((acc: any, img: any) => {
-      acc[img.sectionId] = img.imageUrl;
+      acc[img.sectionId] = {
+        imageUrl: img.imageUrl,
+        images: img.images || []
+      };
       return acc;
     }, {});
 

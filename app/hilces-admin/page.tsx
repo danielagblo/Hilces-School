@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Lock, Search, Users, Calendar, Phone, Mail, ChevronRight, School, RefreshCw, CheckCircle2, Image as ImageIcon, Upload, Trash2, Globe, Home as HomeIcon, BookOpen, Activity as ActivityIcon, GraduationCap } from "lucide-react";
+import { Lock, Search, Users, Calendar, Phone, Mail, ChevronRight, ChevronLeft, School, RefreshCw, CheckCircle2, Image as ImageIcon, Upload, Trash2, Globe, Home as HomeIcon, BookOpen, Activity as ActivityIcon, GraduationCap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -27,12 +27,24 @@ type MediaOverride = {
 };
 
 const MEDIA_SECTIONS = [
+  // GLOBAL
   { id: 'global-logo', label: 'School Logo', default: '/logo.jpeg', category: 'Global' },
-  { id: 'home-slide-1', label: 'Home: Slide 1', default: '/slideshow/576274844_122193623714323889_1221105248129116435_n.jpg', category: 'Homepage' },
-  { id: 'home-slide-2', label: 'Home: Slide 2', default: '/slideshow/649175189_122205799340323889_7498047806518144597_n.jpg', category: 'Homepage' },
-  { id: 'home-slide-3', label: 'Home: Slide 3', default: '/slideshow/650919053_122205798848323889_6911637195678904279_n.jpg', category: 'Homepage' },
-  { id: 'home-slide-4', label: 'Home: Slide 4', default: '/slideshow/649576528_122205799154323889_4336832064221734714_n.jpg', category: 'Homepage' },
-  { id: 'home-slide-5', label: 'Home: Slide 5', default: '/slideshow/651051850_122205799826323889_9089719439425947692_n.jpg', category: 'Homepage' },
+
+  // HOMEPAGE
+  { 
+    id: 'home-hero', 
+    label: 'Hero Slideshow', 
+    default: '/slideshow/576274844_122193623714323889_1221105248129116435_n.jpg', 
+    defaultImages: [
+      '/slideshow/576274844_122193623714323889_1221105248129116435_n.jpg',
+      '/slideshow/649175189_122205799340323889_7498047806518144597_n.jpg',
+      '/slideshow/650919053_122205798848323889_6911637195678904279_n.jpg',
+      '/slideshow/649576528_122205799154323889_4336832064221734714_n.jpg',
+      '/slideshow/651051850_122205799826323889_9089719439425947692_n.jpg'
+    ],
+    category: 'Homepage', 
+    isMultiple: true 
+  },
   { id: 'home-welcome-1', label: 'Welcome: Reading', default: '/images/welcome_reading.png', category: 'Homepage' },
   { id: 'home-welcome-2', label: 'Welcome: Robotics', default: '/images/welcome_robotics.png', category: 'Homepage' },
   { id: 'home-welcome-3', label: 'Welcome: Science', default: '/images/science_lab.png', category: 'Homepage' },
@@ -48,16 +60,24 @@ const MEDIA_SECTIONS = [
   { id: 'home-review-1', label: 'Parent Review: Pic 1', default: '/images/activity_feature.png', category: 'Homepage' },
   { id: 'home-review-2', label: 'Parent Review: Pic 2', default: '/images/lab_feature.png', category: 'Homepage' },
   { id: 'home-review-3', label: 'Parent Review: Pic 3', default: '/images/curriculum_feature.png', category: 'Homepage' },
-  { id: 'about-hero', label: 'About: Hero', default: '/images/hero_school.png', category: 'About' },
-  { id: 'about-philosophy', label: 'About: Philosophy', default: '/images/science_lab.png', category: 'About' },
-  { id: 'academics-hero', label: 'Academics: Hero', default: '/images/robotics_class.png', category: 'Academics' },
-  { id: 'academics-roots', label: 'Academics: Curriculum', default: '/images/science_lab.png', category: 'Academics' },
-  { id: 'academics-lab', label: 'Academics: Lab', default: '/images/science_lab.png', category: 'Academics' },
-  { id: 'academics-cta', label: 'Academics: CTA Bg', default: '/images/hero_school.png', category: 'Academics' },
-  { id: 'activities-hero', label: 'Activities: Hero', default: '/images/robotics_class.png', category: 'Activities' },
-  { id: 'activities-main', label: 'Activities: Talent', default: '/images/robotics_class.png', category: 'Activities' },
-  { id: 'activities-cta', label: 'Activities: CTA Bg', default: '/images/hero_school.png', category: 'Activities' },
-  { id: 'admissions-hero', label: 'Admissions: Hero', default: '/images/hero_school.png', category: 'Admissions' },
+
+  // ABOUT
+  { id: 'about-hero', label: 'Hero Slideshow', default: '/images/hero_school.png', defaultImages: ['/images/hero_school.png'], category: 'About', isMultiple: true },
+  { id: 'about-philosophy', label: 'Core Philosophy', default: '/images/science_lab.png', category: 'About' },
+
+  // ACADEMICS
+  { id: 'academics-hero', label: 'Hero Slideshow', default: '/images/robotics_class.png', defaultImages: ['/images/robotics_class.png'], category: 'Academics', isMultiple: true },
+  { id: 'academics-roots', label: 'Curriculum Roots', default: '/images/science_lab.png', category: 'Academics' },
+  { id: 'academics-lab', label: 'Lab Focus', default: '/images/science_lab.png', category: 'Academics' },
+  { id: 'academics-cta', label: 'CTA Background', default: '/images/hero_school.png', category: 'Academics' },
+
+  // ACTIVITIES
+  { id: 'activities-hero', label: 'Hero Slideshow', default: '/images/robotics_class.png', defaultImages: ['/images/robotics_class.png'], category: 'Activities', isMultiple: true },
+  { id: 'activities-main', label: 'Talent Showcase', default: '/images/robotics_class.png', category: 'Activities' },
+  { id: 'activities-cta', label: 'CTA Background', default: '/images/hero_school.png', category: 'Activities' },
+
+  // ADMISSIONS
+  { id: 'admissions-hero', label: 'Hero Slideshow', default: '/images/hero_school.png', defaultImages: ['/images/hero_school.png'], category: 'Admissions', isMultiple: true },
 ];
 
 export default function AdminPortal() {
@@ -69,8 +89,10 @@ export default function AdminPortal() {
   const [showRefreshed, setShowRefreshed] = useState(false);
   
   const [applicants, setApplicants] = useState<Applicant[]>([]);
-  const [mediaOverrides, setMediaOverrides] = useState<Record<string, string>>({});
+  const [mediaOverrides, setMediaOverrides] = useState<Record<string, { imageUrl: string, images?: string[] }>>({});
   const [searchTerm, setSearchTerm] = useState("");
+  const [mediaCategory, setMediaCategory] = useState('Homepage');
+  const [previewIndices, setPreviewIndices] = useState<Record<string, number>>({});
   
   // Pagination State
   const [currentPage, setCurrentPage] = useState(1);
@@ -117,9 +139,9 @@ export default function AdminPortal() {
       });
       const result = await res.json();
       if (result.success) {
-        const map: Record<string, string> = {};
+        const map: Record<string, { imageUrl: string, images: string[] }> = {};
         result.data.forEach((item: any) => {
-          map[item.sectionId] = item.imageUrl;
+          map[item.sectionId] = { imageUrl: item.imageUrl, images: item.images || [] };
         });
         setMediaOverrides(map);
       }
@@ -128,7 +150,7 @@ export default function AdminPortal() {
     }
   };
 
-  const handleUpload = async (sectionId: string, file: File) => {
+  const handleUpload = async (sectionId: string, file: File, isMultiple: boolean = false) => {
     setLoading(true);
     try {
       const formData = new FormData();
@@ -136,6 +158,7 @@ export default function AdminPortal() {
       formData.append('action', 'upload');
       formData.append('sectionId', sectionId);
       formData.append('file', file);
+      if (isMultiple) formData.append('isMultiple', 'true');
 
       const res = await fetch('/api/admin/media', {
         method: 'POST',
@@ -143,13 +166,42 @@ export default function AdminPortal() {
       });
       const result = await res.json();
       if (result.success) {
-        setMediaOverrides(prev => ({ ...prev, [sectionId]: result.data.imageUrl }));
-        alert("Image updated successfully!");
+        setMediaOverrides(prev => ({ 
+          ...prev, 
+          [sectionId]: { imageUrl: result.data.imageUrl, images: result.data.images || [] } 
+        }));
       } else {
         alert(result.error || "Failed to upload image");
       }
     } catch (err) {
       console.error("Upload error", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRemoveImage = async (sectionId: string, imageUrl: string) => {
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append('password', password);
+      formData.append('action', 'remove_image');
+      formData.append('sectionId', sectionId);
+      formData.append('imageUrl', imageUrl);
+
+      const res = await fetch('/api/admin/media', {
+        method: 'POST',
+        body: formData,
+      });
+      const result = await res.json();
+      if (result.success) {
+        setMediaOverrides(prev => ({ 
+          ...prev, 
+          [sectionId]: { imageUrl: result.data.imageUrl, images: result.data.images || [] } 
+        }));
+      }
+    } catch (err) {
+      console.error("Remove image error", err);
     } finally {
       setLoading(false);
     }
@@ -398,46 +450,141 @@ export default function AdminPortal() {
             </div>
           </>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {MEDIA_SECTIONS.map((section) => {
-              const currentSrc = mediaOverrides[section.id] || section.default;
-              const isOverridden = !!mediaOverrides[section.id];
-              
-              return (
-                <div key={section.id} className="bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden flex flex-col group">
-                  <div className="relative h-48 bg-slate-900">
-                    <Image src={currentSrc} alt={section.label} fill className="object-cover opacity-60 group-hover:scale-105 transition-transform duration-700" />
-                    <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-bold text-white uppercase tracking-widest border border-white/20">
-                      {section.category}
-                    </div>
-                    {isOverridden && (
-                      <div className="absolute top-4 right-4 bg-gold px-3 py-1 rounded-full text-[10px] font-bold text-primary uppercase tracking-widest shadow-lg">
-                        Custom
+          <div className="space-y-10 pb-20">
+            {/* Media Category Tabs */}
+            <div className="flex flex-wrap gap-2 bg-white/5 p-2 rounded-[2rem] backdrop-blur-md">
+              {['Global', 'Homepage', 'About', 'Academics', 'Activities', 'Admissions'].map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setMediaCategory(cat)}
+                  className={`px-8 py-3 rounded-full font-bold transition-all text-sm ${
+                    mediaCategory === cat 
+                      ? 'bg-gold text-primary shadow-[0_0_20px_rgba(249,196,35,0.4)]' 
+                      : 'text-white/60 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            <div className="space-y-8">
+              <div className="flex items-center gap-6">
+                <h3 className="text-3xl font-heading font-bold text-white border-l-4 border-gold pl-6 capitalize">
+                  {mediaCategory} <span className="text-white/40 text-lg font-medium ml-2">Media Slots</span>
+                </h3>
+                <div className="flex-1 h-[2px] bg-white/10"></div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {MEDIA_SECTIONS.filter(s => s.category === mediaCategory).map((section) => {
+                  const override = mediaOverrides[section.id];
+                  const isOverridden = !!override;
+                  const isMultiple = (section as any).isMultiple;
+                  
+                  // Use override images if present, otherwise use defaultImages if defined, otherwise empty array
+                  const overrideImages = override?.images || [];
+                  const images = overrideImages.length > 0 ? overrideImages : ((section as any).defaultImages || []);
+                  
+                  const currentPreviewIndex = previewIndices[section.id] || 0;
+                  const validIndex = currentPreviewIndex < images.length ? currentPreviewIndex : 0;
+                  
+                  // For the main display image
+                  const currentSrc = (isMultiple && images.length > 0) ? images[validIndex] : (override?.imageUrl || section.default);
+
+                  const handleNextPreview = (e: React.MouseEvent) => {
+                    e.preventDefault();
+                    if (images.length <= 1) return;
+                    setPreviewIndices(prev => ({ ...prev, [section.id]: (validIndex + 1) % images.length }));
+                  };
+
+                  const handlePrevPreview = (e: React.MouseEvent) => {
+                    e.preventDefault();
+                    if (images.length <= 1) return;
+                    setPreviewIndices(prev => ({ ...prev, [section.id]: (validIndex - 1 + images.length) % images.length }));
+                  };
+
+                  return (
+                    <div key={section.id} className={`bg-white rounded-[2.5rem] shadow-xl border border-slate-100 overflow-hidden flex flex-col group ${isMultiple ? 'md:col-span-2 lg:col-span-3' : ''}`}>
+                      <div className={`relative ${isMultiple ? 'h-64' : 'h-48'} bg-slate-900 overflow-hidden`}>
+                        <Image src={currentSrc} alt={section.label} fill className="object-cover opacity-60 transition-all duration-500" />
+                        
+                        {isMultiple && images.length > 1 && (
+                          <>
+                            <button onClick={handlePrevPreview} className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-gold hover:text-primary transition-colors z-20 backdrop-blur-md">
+                              <ChevronLeft size={24} />
+                            </button>
+                            <button onClick={handleNextPreview} className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-gold hover:text-primary transition-colors z-20 backdrop-blur-md">
+                              <ChevronRight size={24} />
+                            </button>
+                          </>
+                        )}
+
+                        {isMultiple && images.length > 0 && (
+                          <div className={`absolute top-4 right-4 ${isOverridden ? 'bg-gold text-primary' : 'bg-slate-800 text-white'} px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-lg z-20`}>
+                            {isOverridden ? 'Custom' : 'Default'} ({validIndex + 1}/{images.length})
+                          </div>
+                        )}
+                        {!isMultiple && isOverridden && (
+                          <div className="absolute top-4 right-4 bg-gold px-3 py-1 rounded-full text-[10px] font-bold text-primary uppercase tracking-widest shadow-lg z-20">
+                            Custom
+                          </div>
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6 pointer-events-none z-10">
+                           <div>
+                             <h4 className="text-xl font-heading font-bold text-white mb-1">{section.label}</h4>
+                             <p className="text-[10px] text-white/50 font-medium tracking-widest uppercase">ID: {section.id}</p>
+                           </div>
+                        </div>
                       </div>
-                    )}
-                  </div>
-                  <div className="p-6 flex flex-col flex-1">
-                    <h4 className="text-xl font-heading font-bold text-primary mb-1">{section.label}</h4>
-                    <p className="text-xs text-slate-400 font-medium mb-6">ID: {section.id}</p>
-                    
-                    <div className="mt-auto flex gap-2">
-                      <label className="flex-1 bg-primary hover:bg-primary/90 text-white text-center py-3 rounded-xl font-bold text-xs cursor-pointer transition-all flex items-center justify-center gap-2">
-                        <Upload size={14} /> Upload
-                        <input type="file" className="hidden" accept="image/*" onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) handleUpload(section.id, file);
-                        }} />
-                      </label>
-                      {isOverridden && (
-                        <button onClick={() => handleRevert(section.id)} className="w-12 h-12 bg-red-50 text-red-500 rounded-xl flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow-sm">
-                          <Trash2 size={18} />
-                        </button>
-                      )}
+
+                      <div className="p-8 flex flex-col flex-1">
+                        {isMultiple && overrideImages.length > 0 && (
+                          <div className="mb-8">
+                            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Current Slideshow Gallery</p>
+                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                              {overrideImages.map((img, idx) => (
+                                <div key={idx} className="relative aspect-video rounded-xl overflow-hidden group/img ring-1 ring-slate-100">
+                                  <Image src={img} alt={`Slide ${idx + 1}`} fill className="object-cover" />
+                                  <button 
+                                    onClick={() => handleRemoveImage(section.id, img)}
+                                    className="absolute inset-0 bg-red-500/80 text-white opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center"
+                                  >
+                                    <Trash2 size={16} />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="mt-auto flex flex-col sm:flex-row gap-4">
+                          <label className="flex-1 bg-primary hover:bg-primary/90 text-white text-center py-4 rounded-2xl font-bold text-sm cursor-pointer transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20 active:scale-95">
+                            <Upload size={18} /> {isMultiple ? 'Add New Slide' : 'Replace Image'}
+                            <input type="file" className="hidden" accept="image/*" onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) handleUpload(section.id, file, isMultiple);
+                            }} />
+                          </label>
+                          {isOverridden && (
+                            <button 
+                              onClick={() => handleRevert(section.id)} 
+                              className="px-6 py-4 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center hover:bg-red-500 hover:text-white transition-all shadow-sm font-bold text-sm gap-2"
+                            >
+                              <RefreshCw size={18} className={loading ? "animate-spin" : ""} />
+                              {isMultiple ? 'Clear All & Reset' : 'Revert'}
+                            </button>
+                          )}
+                        </div>
+                        {isMultiple && overrideImages.length === 0 && (
+                          <p className="mt-4 text-xs text-slate-400 italic">No custom slides uploaded. Showing the default school background.</p>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </div>
-              );
-            })}
+                  );
+                })}
+              </div>
+            </div>
           </div>
         )}
       </div>

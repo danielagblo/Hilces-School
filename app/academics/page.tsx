@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import DynamicImage from "@/components/DynamicImage";
+import PageHero from "@/components/PageHero";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -51,7 +51,7 @@ export default function Academics() {
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
         <SchoolDoodles />
         <div className="absolute inset-0">
-          <DynamicImage sectionId="academics-hero" defaultSrc="/images/robotics_class.png" alt="Academics Background" fill className="object-cover opacity-20" priority />
+          <PageHero sectionIdPrefix="academics-hero" defaultSrc="/images/robotics_class.png" opacity={0.2} />
           <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent"></div>
         </div>
         <div className="absolute top-0 right-0 w-96 h-96 bg-gold/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>

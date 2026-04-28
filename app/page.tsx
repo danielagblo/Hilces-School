@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import DynamicImage from "@/components/DynamicImage";
+import DynamicImage, { getGlobalImageMap } from "@/components/DynamicImage";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useMotionValue } from "framer-motion";
 import {
   BookOpen,
@@ -162,6 +162,20 @@ function WhimsicalBubble({ feature, idx }: { feature: any, idx: number }) {
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [heroImages, setHeroImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    const init = async () => {
+      const map = await getGlobalImageMap();
+      const section = map['home-hero'];
+      if (section && section.images && section.images.length > 0) {
+        setHeroImages(section.images);
+      } else if (section && section.imageUrl) {
+        setHeroImages([section.imageUrl]);
+      }
+    };
+    init();
+  }, []);
 
   // Pre-calculated random values to avoid hydration mismatch
   const iconPositions = useMemo(() => {
@@ -186,6 +200,11 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [nextSlide]);
 
+  // Determine current image
+  const currentHeroImage = heroImages.length > 0 
+    ? heroImages[currentSlide % heroImages.length] 
+    : slides[currentSlide].image;
+
   return (
     <div className="overflow-x-hidden">
       {/* Modern Cinematic Hero Section */}
@@ -199,9 +218,8 @@ export default function Home() {
             transition={{ opacity: { duration: 1.5 }, scale: { duration: 8, ease: "easeOut" } }}
             className="absolute inset-0"
           >
-            <DynamicImage 
-              sectionId={`home-slide-${currentSlide + 1}`}
-              defaultSrc={slides[currentSlide].image} 
+            <Image 
+              src={currentHeroImage}
               alt={slides[currentSlide].title} 
               fill 
               sizes="100vw" 

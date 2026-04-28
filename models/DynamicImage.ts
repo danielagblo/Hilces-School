@@ -2,7 +2,8 @@ import mongoose, { Schema, model, models } from "mongoose";
 
 export interface IDynamicImage {
   sectionId: string;
-  imageUrl: string;
+  imageUrl: string; // Keep for legacy/single images
+  images?: string[]; // For multiple images (e.g. hero slider)
   updatedAt: Date;
 }
 
@@ -15,6 +16,10 @@ const DynamicImageSchema = new Schema<IDynamicImage>({
   imageUrl: { 
     type: String, 
     required: true 
+  },
+  images: {
+    type: [String],
+    default: []
   },
   updatedAt: { 
     type: Date, 

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import DynamicImage from "@/components/DynamicImage";
+import PageHero from "@/components/PageHero";
 import { motion } from "framer-motion";
 import { Target, Compass, Award, Globe } from "lucide-react";
 import SchoolDoodles from "@/components/SchoolDoodles";
@@ -12,9 +13,7 @@ export default function About() {
       {/* Header */}
       <div className="bg-primary text-white py-32 px-4 text-center relative overflow-hidden">
         <SchoolDoodles />
-        <div className="absolute inset-0 opacity-10">
-          <DynamicImage sectionId="about-hero" defaultSrc="/images/hero_school.png" alt="background" fill className="object-cover" />
-        </div>
+        <PageHero sectionIdPrefix="about-hero" defaultSrc="/images/hero_school.png" opacity={0.1} />
         <div className="relative z-10">
           <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 tracking-tight">About Hilces</h1>
           <div className="w-24 h-1 bg-gold mx-auto rounded-full mb-8"></div>
