@@ -174,8 +174,8 @@ export default function Academics() {
                   areas: ["Phonics & Literacy", "Mathematical Fluency", "Understanding the World", "Creative Expression"]
                 },
                 {
-                  title: "Primary (Cambridge + GES)",
-                  desc: "A blend of Cambridge Primary and the GES standard. We emphasize enquiry-based learning.",
+                  title: "Primary (British + GES)",
+                  desc: "A blend of British primary standards and the GES curriculum. We emphasize enquiry-based learning.",
                   icon: Lightbulb,
                   areas: ["English & Numeracy", "Integrated Science", "ICT & Digital Literacy", "Local Language & Culture"]
                 },
