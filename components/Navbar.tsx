@@ -32,6 +32,7 @@ export default function Navbar() {
     { name: "About", path: "/about" },
     { name: "Academics", path: "/academics" },
     { name: "Activities", path: "/activities" },
+    { name: "Gallery", path: "/gallery" },
   ];
 
   if (isAdminPage) return null;

@@ -285,6 +285,7 @@ export default function Footer() {
                 <li><Link href="/academics" className="hover:text-gold transition-colors flex items-center gap-2">Academics</Link></li>
                 <li><Link href="/activities" className="hover:text-gold transition-colors flex items-center gap-2">Co-Curricular</Link></li>
                 <li><Link href="/admissions" className="hover:text-gold transition-colors flex items-center gap-2">Admissions</Link></li>
+                <li><Link href="/gallery" className="hover:text-gold transition-colors flex items-center gap-2">Gallery</Link></li>
               </ul>
             </div>
 

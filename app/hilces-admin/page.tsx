@@ -78,6 +78,10 @@ const MEDIA_SECTIONS = [
 
   // ADMISSIONS
   { id: 'admissions-hero', label: 'Hero Slideshow', default: '/images/hero_school.png', defaultImages: ['/images/hero_school.png'], category: 'Admissions', isMultiple: true },
+
+  // GALLERY
+  { id: 'gallery-hero', label: 'Hero Slideshow', default: '/images/hero_school.png', defaultImages: ['/images/hero_school.png'], category: 'Gallery', isMultiple: true },
+  { id: 'gallery-main', label: 'Main Media Gallery', default: '/images/hero_school.png', defaultImages: [], category: 'Gallery', isMultiple: true },
 ];
 
 export default function AdminPortal() {
@@ -453,7 +457,7 @@ export default function AdminPortal() {
           <div className="space-y-10 pb-20">
             {/* Media Category Tabs */}
             <div className="flex flex-wrap gap-2 bg-white/5 p-2 rounded-[2rem] backdrop-blur-md">
-              {['Global', 'Homepage', 'About', 'Academics', 'Activities', 'Admissions'].map((cat) => (
+              {['Global', 'Homepage', 'About', 'Academics', 'Activities', 'Admissions', 'Gallery'].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setMediaCategory(cat)}
