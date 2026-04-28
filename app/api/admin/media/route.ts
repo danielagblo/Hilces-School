@@ -24,18 +24,22 @@ export async function POST(request: Request) {
 
     if (action === 'upload') {
       const sectionId = formData.get('sectionId') as string;
-      const file = formData.get('file') as File;
+      const files = formData.getAll('file') as File[];
       const isMultiple = formData.get('isMultiple') === 'true';
 
-      if (!sectionId || !file) {
-        return NextResponse.json({ success: false, error: 'Missing sectionId or file' }, { status: 400 });
+      if (!sectionId || files.length === 0) {
+        return NextResponse.json({ success: false, error: 'Missing sectionId or files' }, { status: 400 });
       }
 
-      const buffer = Buffer.from(await file.arrayBuffer());
-      const fileName = `dynamic/${sectionId}-${Date.now()}-${file.name}`;
-      const contentType = file.type;
-
-      const imageUrl = await uploadToS3(buffer, fileName, contentType);
+      const imageUrls: string[] = [];
+      for (const file of files) {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        // Use a slight delay or random suffix to avoid name collisions if multiple files uploaded at same ms
+        const fileName = `dynamic/${sectionId}-${Date.now()}-${Math.floor(Math.random() * 1000)}-${file.name}`;
+        const contentType = file.type;
+        const imageUrl = await uploadToS3(buffer, fileName, contentType);
+        imageUrls.push(imageUrl);
+      }
 
       // Update or create the record
       let updatedImage;
@@ -43,15 +47,16 @@ export async function POST(request: Request) {
         updatedImage = await DynamicImage.findOneAndUpdate(
           { sectionId },
           { 
-            $push: { images: imageUrl }, 
-            $set: { updatedAt: new Date(), imageUrl: imageUrl } // Also set main imageUrl for safety
+            $push: { images: { $each: imageUrls } }, 
+            $set: { updatedAt: new Date(), imageUrl: imageUrls[imageUrls.length - 1] } 
           },
           { upsert: true, new: true }
         );
       } else {
+        const imageUrl = imageUrls[0];
         updatedImage = await DynamicImage.findOneAndUpdate(
           { sectionId },
-          { imageUrl, updatedAt: new Date(), images: [] }, // Reset images if not multiple
+          { imageUrl, updatedAt: new Date(), images: [] }, 
           { upsert: true, new: true }
         );
       }

@@ -154,14 +154,19 @@ export default function AdminPortal() {
     }
   };
 
-  const handleUpload = async (sectionId: string, file: File, isMultiple: boolean = false) => {
+  const handleUpload = async (sectionId: string, files: FileList | File[], isMultiple: boolean = false) => {
     setLoading(true);
     try {
       const formData = new FormData();
       formData.append('password', password);
       formData.append('action', 'upload');
       formData.append('sectionId', sectionId);
-      formData.append('file', file);
+      
+      // Add all selected files to the request
+      Array.from(files).forEach(file => {
+        formData.append('file', file);
+      });
+      
       if (isMultiple) formData.append('isMultiple', 'true');
 
       const res = await fetch('/api/admin/media', {
@@ -175,7 +180,7 @@ export default function AdminPortal() {
           [sectionId]: { imageUrl: result.data.imageUrl, images: result.data.images || [] } 
         }));
       } else {
-        alert(result.error || "Failed to upload image");
+        alert(result.error || "Failed to upload image(s)");
       }
     } catch (err) {
       console.error("Upload error", err);
@@ -564,11 +569,17 @@ export default function AdminPortal() {
 
                         <div className="mt-auto flex flex-col sm:flex-row gap-4">
                           <label className="flex-1 bg-primary hover:bg-primary/90 text-white text-center py-4 rounded-2xl font-bold text-sm cursor-pointer transition-all flex items-center justify-center gap-3 shadow-lg shadow-primary/20 active:scale-95">
-                            <Upload size={18} /> {isMultiple ? 'Add New Slide' : 'Replace Image'}
-                            <input type="file" className="hidden" accept="image/*" onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) handleUpload(section.id, file, isMultiple);
-                            }} />
+                            <Upload size={18} /> {isMultiple ? 'Add New Slides' : 'Replace Image'}
+                            <input 
+                              type="file" 
+                              className="hidden" 
+                              accept="image/*" 
+                              multiple={isMultiple}
+                              onChange={(e) => {
+                                const files = e.target.files;
+                                if (files && files.length > 0) handleUpload(section.id, files, isMultiple);
+                              }} 
+                            />
                           </label>
                           {isOverridden && (
                             <button 
