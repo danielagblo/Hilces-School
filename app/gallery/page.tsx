@@ -67,16 +67,13 @@ export default function GalleryPage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: (idx % 10) * 0.1 }}
-                className="relative break-inside-avoid overflow-hidden rounded-3xl shadow-lg group"
+                className="relative break-inside-avoid mb-6 overflow-hidden rounded-3xl shadow-lg group bg-slate-200"
               >
-                <div className="relative w-full" style={{ paddingBottom: `${(idx % 3 === 0 ? 120 : idx % 2 === 0 ? 80 : 100)}%` }}>
-                   <Image 
-                     src={img} 
-                     alt={`Gallery Image ${idx + 1}`} 
-                     fill 
-                     className="object-cover transition-transform duration-700 group-hover:scale-110" 
-                   />
-                </div>
+                 <img 
+                   src={img} 
+                   alt={`Gallery Image ${idx + 1}`} 
+                   className="w-full h-auto transition-transform duration-700 group-hover:scale-110 block" 
+                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </motion.div>
             ))}
